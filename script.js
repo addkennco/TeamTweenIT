@@ -1,6 +1,3 @@
-// Fabric.js canvas
-const canvas = new fabric.Canvas('c');
-
 // Upload user image
 document.getElementById('uploader').addEventListener('change', function(e) {
   const file = e.target.files[0];
@@ -8,10 +5,11 @@ document.getElementById('uploader').addEventListener('change', function(e) {
   reader.onload = function(f) {
     fabric.Image.fromURL(f.target.result, function(img) {
       canvas.clear(); // clear previous
-      img.scaleToWidth(600);
-      img.scaleToHeight(600);
+      img.scaleToWidth(canvas.width); // scale to canvas width
+      // optional: maintain aspect ratio automatically
       canvas.add(img);
       canvas.sendToBack(img);
+      canvas.requestRenderAll(); // ensures canvas updates
     });
   };
   reader.readAsDataURL(file);
@@ -21,19 +19,8 @@ document.getElementById('uploader').addEventListener('change', function(e) {
 function addSticker(src) {
   fabric.Image.fromURL(src, function(img) {
     img.scale(0.5);
-    img.set({ left: 100, top: 100 });
+    img.set({ left: Math.random() * 400, top: Math.random() * 400 }); // optional: random position
     canvas.add(img);
+    canvas.requestRenderAll(); // ensures sticker shows immediately
   });
 }
-
-// Download final image
-document.getElementById('download').addEventListener('click', function() {
-  const dataURL = canvas.toDataURL({
-    format: 'png',
-    quality: 1
-  });
-  const link = document.createElement('a');
-  link.href = dataURL;
-  link.download = 'final-image.png';
-  link.click();
-});
