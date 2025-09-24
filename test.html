@@ -9,7 +9,16 @@
 </head>
 <body>
   <h1>Test Sticker App</h1>
-
+  
+<canvas id="c" width="500" height="500"></canvas>
+<script>
+  const ctx = document.getElementById('c').getContext('2d');
+  ctx.fillStyle = "red";
+  ctx.fillRect(0, 0, 500, 500);
+  ctx.fillStyle = "blue";
+  ctx.fillRect(50, 50, 100, 100);
+</script>
+  
   <input type="file" id="uploader" accept="image/*"><br><br>
   <button onclick="addSticker('icons/Bunny.png')">Add Bun</button>
   <button onclick="downloadImage()">Download</button>
