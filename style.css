@@ -54,6 +54,7 @@ body {
   box-sizing: border-box;
 }
 
+/* Button display */
 #icon-buttons {
   display: flex;
   gap: 20px;       /* space between icons */
@@ -72,16 +73,18 @@ body {
 .icon-button:hover {
   transform: scale(1.2); /* slightly enlarge on hover */
 }
-  .font-selector {
+
+/* Font editor */
+
+.font-selector {
   font-size: 14px;
-  height: 32px;
   padding: 12px 16px;    
   border-radius: 6px;  
 }
 
 input[type="color"] {
   width: 40px;
-  height: 32px;
+  height: 22px;
   padding: 0;
   border: 1px solid #ccc;
   border-radius: 4px;
