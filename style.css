@@ -68,3 +68,22 @@ button:hover {
   border: 1px solid #ccc;
   box-sizing: border-box;
 }
+
+#icon-buttons {
+  display: flex;
+  gap: 10px;       /* space between icons */
+  justify-content: center;
+  margin: 10px 0;
+}
+
+.icon-button {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  vertical-align: middle;
+  transition: transform 0.2s; /* smooth hover effect */
+}
+
+.icon-button:hover {
+  transform: scale(1.2); /* slightly enlarge on hover */
+}
