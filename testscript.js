@@ -2,6 +2,16 @@ const canvas = new fabric.Canvas('c');
 
 canvas.setBackgroundColor('red', canvas.renderAll.bind(canvas));
 
+// Debug: add a blue rectangle to confirm drawing works
+canvas.add(new fabric.Rect({
+  left: 10,
+  top: 10,
+  fill: 'blue',
+  width: 100,
+  height: 100
+}));
+canvas.renderAll();
+
 // upload background as a regular object
 document.getElementById('uploader').addEventListener('change', function(e) {
   const file = e.target.files[0];
