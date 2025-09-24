@@ -1,77 +1,47 @@
-// Initialize canvas
+// Fabric.js canvas
 const canvas = new fabric.Canvas('c', {
-  preserveObjectStacking: true
+  backgroundColor: '#eee' // so you can see the canvas boundaries
 });
 
-// ====================
-// Handle image upload
-// ====================
+// Upload user image
 document.getElementById('uploader').addEventListener('change', function(e) {
   const file = e.target.files[0];
-  if (!file) return;
-
   const reader = new FileReader();
   reader.onload = function(f) {
     fabric.Image.fromURL(f.target.result, function(img) {
-      // Scale image to fit inside canvas
-      const scale = Math.min(
-        canvas.width / img.width,
-        canvas.height / img.height
-      );
-      img.scale(scale);
-
-      // Clear old stuff
-      canvas.clear();
-
-      // Set background image
-      canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {
-        originX: 'center',
-        originY: 'center',
-        left: canvas.width / 2,
-        top: canvas.height / 2
+      canvas.clear(); // clear previous
+      img.set({
+        left: 0,
+        top: 0,
+        selectable: false // background image not draggable
       });
 
-      console.log("Background image added to canvas");
+      // scale image to fit canvas width/height
+      img.scaleToWidth(canvas.width);
+      img.scaleToHeight(canvas.height);
+
+      canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas));
     });
   };
   reader.readAsDataURL(file);
 });
 
-// ====================
-// Add stickers
-// ====================
+// Add sticker
 function addSticker(src) {
   fabric.Image.fromURL(src, function(img) {
-    img.set({
-      left: 50,
-      top: 50,
-      hasControls: true,
-      selectable: true
-    });
-    img.scale(0.3); // adjust size of stickers
+    img.scale(0.5);
+    img.set({ left: 100, top: 100 });
     canvas.add(img);
-    canvas.setActiveObject(img);
+    canvas.renderAll(); // force re-draw
   });
 }
 
-// Example sticker buttons
-document.getElementById('bunny').addEventListener('click', function() {
-  addSticker('stickers/bunny.png');
-});
-
-document.getElementById('puppin').addEventListener('click', function() {
-  addSticker('stickers/puppin.png');
-});
-
-// ====================
 // Download final image
-// ====================
 document.getElementById('download').addEventListener('click', function() {
   const dataURL = canvas.toDataURL({
     format: 'png',
     quality: 1
   });
-
   const link = document.createElement('a');
   link.href = dataURL;
   link.download = 'final-image.png';
