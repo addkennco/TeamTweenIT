@@ -235,6 +235,33 @@ window.addSticker = addSticker;
       });
   });
 
+// Clear the canvas completely
+function clearCanvas() {
+  if (confirm("Are you sure you want to clear the canvas?")) {
+    canvas.clear();
+    canvas.backgroundColor = 'lightgrey'; // or your desired background
+    canvas.renderAll();
+  }
+}
+
+// Show a help popup
+function showHelp() {
+  const helpText = `
+  Welcome to the Team TweenIT Postmaker! 🎨
+
+  - Use the Undo / Redo icons to fix mistakes.
+  - Upload images to add your own designs.
+  - Search and add stickers using the search bar.
+  - Recently used stickers appear in the "Recently Used" section.
+  - Download your final image with the download icon.
+  - Clear the canvas with the eraser icon if you want to start fresh.
+  
+  Have fun creating!
+  `;
+  alert(helpText); // simple popup
+}
+
+  
   // --- Undo/redo stacks ---
   let undoStack = [];
   let redoStack = [];
