@@ -37,7 +37,8 @@ function addSticker(src) {
       top: 50,
       hasControls: true,
       hasBorders: true,
-      selectable: true
+      selectable: true,
+      stickerSrc: src // <--- custom tag!
     });
     img.scaleToWidth(100);
     canvas.add(img);
@@ -50,7 +51,7 @@ window.addSticker = addSticker;
 
 // remove sticker
 function removeSticker(src) {
-  const toRemove = canvas.getObjects('image').filter(img => img.getSrc && img.getSrc().includes(src));
+  const toRemove = canvas.getObjects('image').filter(img => img.stickerSrc === src);
   toRemove.forEach(obj => canvas.remove(obj));
   canvas.renderAll();
   console.log("Removed stickers for", src);
