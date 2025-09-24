@@ -39,6 +39,7 @@ body {
   overflow-y: auto;
   flex-grow: 1; /* fills remaining height */
 }
+
 /* Recently used stickers container */
 #recent-stickers-container {
   max-width: 500px; 
@@ -73,7 +74,8 @@ body {
 }
 
 .recently-used-text {
-  text-align: left;
+  text-align: left
+  width: 500px;
 }
   .font-selector {
   font-size: 14px;    
