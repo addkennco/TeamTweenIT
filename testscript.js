@@ -1,4 +1,4 @@
-console.log("JS loaded");
+console.log("JS loaded")
 
 const canvas = new fabric.Canvas('c');
 
