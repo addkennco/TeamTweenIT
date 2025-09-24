@@ -162,9 +162,20 @@ function saveState() {
 }
 
 // --- Always restack stickers after any object change, and save state ---
-canvas.on('object:added',   function() { setTimeout(() => { restackStickers(); saveState(); }, 0); });
-canvas.on('object:modified',function() { setTimeout(() => { restackStickers(); saveState(); }, 0); });
-canvas.on('object:removed', function() { setTimeout(() => { restackStickers(); saveState(); }, 0); });
+canvas.on('object:added', function() {
+  if (isRestoring) return;        // Don’t save while restoring
+  setTimeout(() => { restackStickers(); saveState(); }, 0);
+});
+
+canvas.on('object:modified', function() {
+  if (isRestoring) return;
+  setTimeout(() => { restackStickers(); saveState(); }, 0);
+});
+
+canvas.on('object:removed', function() {
+  if (isRestoring) return;
+  setTimeout(() => { restackStickers(); saveState(); }, 0);
+});
 
 // --- Undo/redo functions, restack after restoring ---
 function undo() {
@@ -197,16 +208,18 @@ saveState();
 
 // --- Download ---
 function downloadImage() {
-  canvas.discardActiveObject(); // hide selection borders
+  canvas.discardActiveObject();
   canvas.renderAll();
-
   const dataURL = canvas.toDataURL({ format: 'png' });
+
+  // Create a real anchor and dispatch a MouseEvent
   const link = document.createElement('a');
   link.href = dataURL;
   link.download = 'final.png';
-  
-  document.body.appendChild(link);  // make sure it’s in DOM
-  link.click();
+  document.body.appendChild(link);
+
+  // Trigger a real user-like click
+  link.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
+
   document.body.removeChild(link);
 }
-window.downloadImage = downloadImage;
