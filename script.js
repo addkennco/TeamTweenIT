@@ -1,6 +1,6 @@
 // Fabric.js canvas
 const canvas = new fabric.Canvas('c', {
-  backgroundColor: 'transparent'
+  backgroundColor: '#c9f4ff'
 });
 
 // Upload user image
