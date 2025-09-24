@@ -22,10 +22,8 @@
   <br>
   <!-- Upload image -->
   <input type="file" id="uploader" accept="image/*">
-
-  <!-- Undo Redo Text Clear Help -->
   <br><br>
-<!-- Undo, Redo, Download, Clear, Help icons -->
+  <!-- Undo, Redo, Download, Clear, Help icons -->
 <div id="icon-buttons">
   <img src="icons/undo.png" alt="Undo" onclick="undo()" class="icon-button">
   <img src="icons/redo.png" alt="Redo" onclick="redo()" class="icon-button">
@@ -33,7 +31,7 @@
   <img src="icons/eraser.png" alt="Clear Canvas" onclick="clearCanvas()" class="icon-button">
   <img src="icons/question.png" alt="Help" onclick="showHelp()" class="icon-button">
 </div>
-    <div id="test-editor">
+<div id="text-editor">
  <select id="font-selector" class="font-preview">
   <option value="Bebas Neue" style="font-family: 'Bebas+Neue', sans-serif;">Bold</option>
   <option value="Pacifico" style="font-family: 'Pacifico', cursive;">Fancy</option>
@@ -48,14 +46,15 @@
   type="range"
   min="12"
   max="120"
-  value="40"
+  value="25"
   step="2"
   style="width:100px;"
 >
-<span id="font-size-display">40</span>px
+<span id="font-size-display">25</span>px
+  </div>
+    
   <!-- Canvas -->
   <canvas id="c" width="600" height="600"></canvas>
-    </div>
 <br>
     <!-- Search stickers -->
 <div id="sticker-search-container">
