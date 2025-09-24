@@ -4,6 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sour+Gummy&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Caprasimo&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet">
+
   <!-- Fabric.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.0/fabric.min.js"></script>
   <!-- PWA manifest -->
@@ -28,10 +34,12 @@
   <img src="icons/question.png" alt="Help" onclick="showHelp()" class="icon-button">
 </div>
   <br><br>
-    <select id="font-selector">
-  <option value="Arial Rounded MT Bold">Arial Rounded</option>
-  <option value="Cooper Black">Cooper Black</option>
-  <option value="Papyrus">Papyrus</option>
+ <select id="font-selector" class="font-preview">
+  <option value="Lato" style="font-family: 'Lato', sans-serif;">Bold</option>
+  <option value="Pacifico" style="font-family: 'Pacifico', cursive;">Fancy</option>
+  <option value="Sour Gummy" style="font-family: 'Sour Gummy', cursive;">Happy</option>
+  <option value="Caprasimo" style="font-family: 'Caprasimo', cursive;">Strong</option>
+  <option value="Jost" style="font-family: 'Jost', sans-serif;">Smooth</option>
 </select>
     <input type="color" id="text-color-picker" value="#000000">
   <!-- Canvas -->
