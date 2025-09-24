@@ -25,6 +25,12 @@ function restackStickers() {
   canvas.renderAll();
 }
 
+fabric.Object.prototype.toObject = (function(toObject) {
+  return function(properties) {
+    return toObject.call(this, (properties || []).concat(['isSticker','stickerSrc']));
+  };
+})(fabric.Object.prototype.toObject);
+
 // --- Upload image as a regular object (backgrounds/images) ---
 document.getElementById('uploader').addEventListener('change', function(e) {
   const file = e.target.files[0];
