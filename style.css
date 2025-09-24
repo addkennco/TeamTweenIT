@@ -22,17 +22,25 @@ button {
 button:hover {
   background: #c4ffab;
 }
-/* Sticker search results container */
+
 #sticker-search-container {
-  max-width: 600px; /* optional max width */
-  height: 250px;    /* set the height you want */
-  overflow-y: auto; /* adds scroll if there are too many stickers */
+  max-width: 600px;
+  height: 250px;
+  overflow-y: auto;
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  padding: 1px;
-  border: 1px solid #ccc; /* optional border */
+  flex-direction: column; /* stack search + results */
+  gap: 4px;
+  padding: 4px;
+  border: 1px solid #ccc;
   box-sizing: border-box;
+}
+
+#search-results {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  overflow-y: auto; /* scroll for results if needed */
+  flex-grow: 1;      /* fills remaining height */
 }
 
 /* Recently used stickers container */
