@@ -37,13 +37,13 @@ button:hover {
 
 /* Input with magnifying glass */
 #sticker-search {
-  width: 100%;
+  width: 100px;
   height: 36px; /* consistent height */
   padding: 6px 8px 6px 36px; /* left padding for icon */
   font-size: 14px;
   border: 1px solid #ccc;
   border-radius: 8px;
-  background: url('icons/magnifying-glass.png') no-repeat 10px left;
+  background: url('icons/magnifying-glass.png') no-repeat 10px center;
   background-size: 20px 20px;
   box-sizing: border-box;
 }
