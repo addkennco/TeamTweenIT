@@ -57,3 +57,4 @@ function downloadImage() {
   link.click();
 }
 window.downloadImage = downloadImage;
+}
