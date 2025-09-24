@@ -5,6 +5,10 @@ body {
   background: #fafafa;
 }
 
+canvas {
+  border: 1px solid #ccc;
+}
+
 #sticker-buttons {
   margin: 15px;
 }
