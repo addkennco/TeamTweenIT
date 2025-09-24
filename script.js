@@ -1,6 +1,5 @@
 const canvas = new fabric.Canvas('c');
-preserveObjectStacking: true
-});
+preserveObjectStacking: true;
 canvas.setBackgroundColor('lightgrey', canvas.renderAll.bind(canvas));
 
 // --- Helper to restack stickers above everything else ---
