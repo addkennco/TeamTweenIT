@@ -74,14 +74,14 @@ function removeSticker(src) {
 }
 window.removeSticker = removeSticker;
 
-// undo and redo
+// Undo/redo stacks
 let undoStack = [];
 let redoStack = [];
 const maxHistory = 25;
-let isRestoring = false;
+let isRestoring = false; // <--- ADD THIS
 
 function saveState() {
-  if (isRestoring) return;
+  if (isRestoring) return; // <--- ADD THIS
   redoStack = [];
   undoStack.push(canvas.toDatalessJSON());
   if (undoStack.length > maxHistory) undoStack.shift();
@@ -93,27 +93,26 @@ canvas.on('object:removed', saveState);
 
 function undo() {
   if (undoStack.length > 1) {
-    isRestoring = true;
+    isRestoring = true; // <--- ADD THIS
     redoStack.push(undoStack.pop());
     canvas.loadFromJSON(undoStack[undoStack.length - 1], () => {
       canvas.renderAll();
-      isRestoring = false;
+      isRestoring = false; // <--- ADD THIS
     });
   }
 }
 
 function redo() {
   if (redoStack.length > 0) {
-    isRestoring = true;
+    isRestoring = true; // <--- ADD THIS
     const state = redoStack.pop();
     undoStack.push(state);
     canvas.loadFromJSON(state, () => {
       canvas.renderAll();
-      isRestoring = false;
+      isRestoring = false; // <--- ADD THIS
     });
   }
 }
-
 saveState(); // on initial load
 
 // download final image
