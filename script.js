@@ -1,7 +1,5 @@
 // Fabric.js canvas
-const canvas = new fabric.Canvas('c', {
-  backgroundColor: '#eee' // so you can see the canvas boundaries
-});
+const canvas = new fabric.Canvas('c');
 
 // Upload user image
 document.getElementById('uploader').addEventListener('change', function(e) {
@@ -10,17 +8,10 @@ document.getElementById('uploader').addEventListener('change', function(e) {
   reader.onload = function(f) {
     fabric.Image.fromURL(f.target.result, function(img) {
       canvas.clear(); // clear previous
-      img.set({
-        left: 0,
-        top: 0,
-        selectable: false // background image not draggable
-      });
-
-      // scale image to fit canvas width/height
-      img.scaleToWidth(canvas.width);
-      img.scaleToHeight(canvas.height);
-
-      canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas));
+      img.scaleToWidth(600);
+      img.scaleToHeight(600);
+      canvas.add(img);
+      canvas.sendToBack(img);
     });
   };
   reader.readAsDataURL(file);
@@ -32,7 +23,6 @@ function addSticker(src) {
     img.scale(0.5);
     img.set({ left: 100, top: 100 });
     canvas.add(img);
-    canvas.renderAll(); // force re-draw
   });
 }
 
