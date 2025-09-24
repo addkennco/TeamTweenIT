@@ -1,51 +1,59 @@
-// Fabric.js canvas
-const canvas = new fabric.Canvas('c', {
-  backgroundColor: '#c9f4ff'
-});
+const canvas = new fabric.Canvas('c');
 
-// Upload user image
+// Optionally set a background color to verify rendering
+canvas.setBackgroundColor('#c9f4ff', canvas.renderAll.bind(canvas));
+
+// upload image as a regular object
 document.getElementById('uploader').addEventListener('change', function(e) {
   const file = e.target.files[0];
   if (!file) return;
-
   const reader = new FileReader();
+
   reader.onload = function(f) {
     fabric.Image.fromURL(f.target.result, function(img) {
-      // Scale the image to fit within canvas
-      const scale = Math.min(
+      // Scale proportionally to fit canvas
+      let scale = Math.min(
         canvas.width / img.width,
         canvas.height / img.height
       );
       img.scale(scale);
-
-      // Set as background image
-      canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {
-        originX: 'center',
-        originY: 'center',
-        left: canvas.width / 2,
-        top: canvas.height / 2
-      });
+      img.set({ left: 0, top: 0, selectable: true });
+      canvas.add(img);
+      canvas.setActiveObject(img);
+      canvas.renderAll();
+      console.log("Image added as object!", img);
+      console.log("Canvas objects:", canvas.getObjects());
     }, { crossOrigin: 'anonymous' });
   };
+
   reader.readAsDataURL(file);
 });
 
-// Add sticker
+// add sticker
 function addSticker(src) {
   fabric.Image.fromURL(src, function(img) {
-    img.scale(0.5);
-    img.set({ left: 100, top: 100 });
+    img.set({
+      left: 50,
+      top: 50,
+      hasControls: true,
+      hasBorders: true,
+      selectable: true
+    });
+    img.scaleToWidth(100);
     canvas.add(img);
-    canvas.setActiveObject(img); // make it draggable right away
+    canvas.setActiveObject(img);
     canvas.renderAll();
+    console.log("Sticker added!", img);
   }, { crossOrigin: 'anonymous' });
 }
+window.addSticker = addSticker;
 
-// Download final image
-document.getElementById('download').addEventListener('click', function() {
-  const dataURL = canvas.toDataURL({
-    format: 'png',
-    quality: 1
-  });
+// download final image
+function downloadImage() {
+  const dataURL = canvas.toDataURL({ format: 'png' });
   const link = document.createElement('a');
-  link.href
+  link.href = dataURL;
+  link.download = 'final.png';
+  link.click();
+}
+window.downloadImage = downloadImage;
