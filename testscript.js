@@ -30,14 +30,6 @@ document.getElementById('uploader').addEventListener('change', function(e) {
       img.scale(scale);
       img.set({ left: 0, top: 0, selectable: true });
 
-      canvas.add(img);
-      canvas.setActiveObject(img);
-      canvas.renderAll();
-      console.log("Image added as object!", img);
-      console.log("Canvas objects:", canvas.getObjects());
-    }, { crossOrigin: 'anonymous' });
-  };
-
   reader.readAsDataURL(file);
 });
 
