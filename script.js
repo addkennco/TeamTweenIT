@@ -26,6 +26,31 @@ document.getElementById('uploader').addEventListener('change', function(e) {
   reader.readAsDataURL(file);
 });
 
+// Get reference to canvas
+const canvas = new fabric.Canvas('c');
+
+// Handle image upload
+document.getElementById('uploader').addEventListener('change', function(e) {
+  const file = e.target.files[0];
+  const reader = new FileReader();
+
+  reader.onload = function(f) {
+    fabric.Image.fromURL(f.target.result, function(img) {
+      img.scaleToWidth(400); // scale image down to fit canvas width
+      canvas.add(img);
+      canvas.centerObject(img);
+      canvas.setActiveObject(img);
+      canvas.renderAll();
+    });
+  };
+
+  if (file) {
+    reader.readAsDataURL(file);
+  }
+});
+
+
+
 // Add sticker
 function addSticker(src) {
   fabric.Image.fromURL(src, function(img) {
