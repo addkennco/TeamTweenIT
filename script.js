@@ -298,15 +298,16 @@ window.showHelp = function() {
   saveState();
 };
 
-document.getElementById('font-selector').addEventListener('change', function() {
-  const active = canvas.getActiveObject();
-  if (active && active.type === 'textbox') {
-    active.set('fontFamily', this.value);
-    canvas.renderAll();
-    saveState();
+  // --- Font Selector ---
+document.getElementById('font-selector').addEventListener('change', e => {
+  const obj = canvas.getActiveObject();
+  if (obj && obj.type === 'textbox') {
+    obj.set('fontFamily', e.target.value);
+    canvas.requestRenderAll();
   }
 });
 
+  // --- Color Picker ---
   document.getElementById('text-color-picker').addEventListener('input', function() {
   const active = canvas.getActiveObject();
   if (active && active.type === 'textbox') {
