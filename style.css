@@ -24,21 +24,21 @@ button:hover {
 }
 /* Sticker search results container */
 #sticker-search-container {
-  max-width: 200px; /* optional max width */
-  height: 120px;    /* set the height you want */
+  max-width: 600px; /* optional max width */
+  height: 250px;    /* set the height you want */
   overflow-y: auto; /* adds scroll if there are too many stickers */
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  padding: 4px;
+  padding: 1px;
   border: 1px solid #ccc; /* optional border */
   box-sizing: border-box;
 }
 
 /* Recently used stickers container */
 #recent-stickers-container {
-  max-width: 200px; /* optional max width */
-  height: 300px;     /* set height you like */
+  max-width: 600px; /* optional max width */
+  height: 250px;     /* set height you like */
   overflow-x: auto; /* horizontal scroll if needed */
   display: flex;
   flex-wrap: nowrap;
