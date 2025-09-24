@@ -23,10 +23,10 @@ button:hover {
   background: #c4ffab;
 }
 
+/* Sticker search container */
 #sticker-search-container {
   max-width: 600px;
   height: 250px;
-  overflow-y: auto;
   display: flex;
   flex-direction: column; /* stack search + results */
   gap: 4px;
@@ -35,14 +35,27 @@ button:hover {
   box-sizing: border-box;
 }
 
+/* Input with magnifying glass */
+#sticker-search {
+  width: 100%;
+  height: 36px; /* consistent height */
+  padding: 6px 8px 6px 36px; /* left padding for icon */
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: url('icons/magnifying-glass.png') no-repeat 10px left;
+  background-size: 20px 20px;
+  box-sizing: border-box;
+}
+
+/* Search results container */
 #search-results {
   display: flex;
   gap: 4px;
   flex-wrap: wrap;
-  overflow-y: auto; /* scroll for results if needed */
-  flex-grow: 1;      /* fills remaining height */
+  overflow-y: auto;
+  flex-grow: 1; /* fills remaining height */
 }
-
 /* Recently used stickers container */
 #recent-stickers-container {
   max-width: 600px; /* optional max width */
