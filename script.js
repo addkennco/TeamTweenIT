@@ -1,7 +1,7 @@
 const canvas = new fabric.Canvas('c');
 
 // Optionally set a background color to verify rendering
-canvas.setBackgroundColor('#c9f4ff', canvas.renderAll.bind(canvas));
+canvas.setBackgroundColor('lightgrey', canvas.renderAll.bind(canvas));
 
 // upload image as a regular object
 document.getElementById('uploader').addEventListener('change', function(e) {
@@ -57,4 +57,3 @@ function downloadImage() {
   link.click();
 }
 window.downloadImage = downloadImage;
-}
