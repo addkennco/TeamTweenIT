@@ -1,6 +1,6 @@
 const canvas = new fabric.Canvas('c');
 
-canvas.setBackgroundColor('lightgray', canvas.renderAll.bind(canvas));
+canvas.setBackgroundColor('red', canvas.renderAll.bind(canvas));
 
 // upload background as a regular object
 document.getElementById('uploader').addEventListener('change', function(e) {
