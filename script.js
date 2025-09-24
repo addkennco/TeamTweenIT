@@ -1,48 +1,67 @@
 const canvas = new fabric.Canvas('c');
 canvas.setBackgroundColor('lightgrey', canvas.renderAll.bind(canvas));
 
-// === Helper to restack stickers above everything else ===
+// --- Helper to restack stickers above everything else ---
 function restackStickers() {
-  // Bring all non-sticker images (backgrounds) to back first
+  // Put all non-sticker images at the back
   canvas.getObjects().forEach(obj => {
-    if (!obj.isSticker) {
-      canvas.sendToBack(obj);
-    }
+    if (!obj.isSticker) canvas.sendToBack(obj);
   });
-  // Then bring all stickers to front, in order of addition
+  // Bring all stickers to the front
   canvas.getObjects().forEach(obj => {
-    if (obj.isSticker) {
-      canvas.bringToFront(obj);
-    }
+    if (obj.isSticker) canvas.bringToFront(obj);
   });
   canvas.renderAll();
 }
 
-// === Upload image as a regular object (backgrounds/images) ===
+// --- Upload image as a regular object (backgrounds/images) ---
 document.getElementById('uploader').addEventListener('change', function(e) {
   const file = e.target.files[0];
   if (!file) return;
   const reader = new FileReader();
-
   reader.onload = function(f) {
     fabric.Image.fromURL(f.target.result, function(img) {
-      let scale = Math.min(
-        canvas.width / img.width,
-        canvas.height / img.height
-      );
+      let scale = Math.min(canvas.width / img.width, canvas.height / img.height);
       img.scale(scale);
-      img.set({ left: 0, top: 0, selectable: true, isSticker: false }); // Tag as not sticker
+      img.set({ left: 0, top: 0, selectable: true, isSticker: false });
       canvas.add(img);
       canvas.setActiveObject(img);
       restackStickers();
-      console.log("Image added as object!", img);
     }, { crossOrigin: 'anonymous' });
   };
-
   reader.readAsDataURL(file);
 });
 
-// === Double click/single click sticker logic ===
+// --- Add sticker (always bring to front, tag as sticker) ---
+function addSticker(src) {
+  fabric.Image.fromURL(src, function(img) {
+    img.set({
+      left: 50,
+      top: 50,
+      hasControls: true,
+      hasBorders: true,
+      selectable: true,
+      stickerSrc: src,
+      isSticker: true
+    });
+    img.scaleToWidth(100);
+    canvas.add(img);
+    canvas.setActiveObject(img);
+    restackStickers();
+  }, { crossOrigin: 'anonymous' });
+}
+window.addSticker = addSticker;
+
+// --- Remove sticker by source ---
+function removeSticker(src) {
+  const toRemove = canvas.getObjects('image').filter(img => img.stickerSrc === src);
+  toRemove.forEach(obj => canvas.remove(obj));
+  restackStickers();
+  console.log("Removed stickers for", src);
+}
+window.removeSticker = removeSticker;
+
+// --- Double click/single click sticker logic ---
 let clickTimer = null;
 function stickerButtonHandler(src) {
   if (clickTimer) {
@@ -58,37 +77,7 @@ function stickerButtonHandler(src) {
 }
 window.stickerButtonHandler = stickerButtonHandler;
 
-// === Add sticker (always bring to front, tag as sticker) ===
-function addSticker(src) {
-  fabric.Image.fromURL(src, function(img) {
-    img.set({
-      left: 50,
-      top: 50,
-      hasControls: true,
-      hasBorders: true,
-      selectable: true,
-      stickerSrc: src,
-      isSticker: true // Tag as sticker
-    });
-    img.scaleToWidth(100);
-    canvas.add(img);
-    canvas.setActiveObject(img);
-    restackStickers();
-    console.log("Sticker added!", img);
-  }, { crossOrigin: 'anonymous' });
-}
-window.addSticker = addSticker;
-
-// === Remove sticker by source ===
-function removeSticker(src) {
-  const toRemove = canvas.getObjects('image').filter(img => img.stickerSrc === src);
-  toRemove.forEach(obj => canvas.remove(obj));
-  restackStickers();
-  console.log("Removed stickers for", src);
-}
-window.removeSticker = removeSticker;
-
-// === Undo/redo stacks ===
+// --- Undo/redo stacks ---
 let undoStack = [];
 let redoStack = [];
 const maxHistory = 25;
@@ -101,14 +90,16 @@ function saveState() {
   if (undoStack.length > maxHistory) undoStack.shift();
 }
 
-// === Always restack stickers after any object or selection change ===
+// --- Always restack stickers after any object change, and save state ---
 canvas.on('object:added', function() { restackStickers(); saveState(); });
 canvas.on('object:modified', function() { restackStickers(); saveState(); });
 canvas.on('object:removed', function() { restackStickers(); saveState(); });
-canvas.on('selection:created', function() { restackStickers(); });
-canvas.on('selection:updated', function() { restackStickers(); });
 
-// === Undo/redo functions, restack after restoring ===
+// --- Always restack stickers after selection, but use setTimeout! ---
+canvas.on('selection:created', function() { setTimeout(restackStickers, 0); });
+canvas.on('selection:updated', function() { setTimeout(restackStickers, 0); });
+
+// --- Undo/redo functions, restack after restoring ---
 function undo() {
   if (undoStack.length > 1) {
     isRestoring = true;
@@ -134,10 +125,10 @@ function redo() {
 }
 window.redo = redo;
 
-// === On initial load, save the empty canvas state ===
+// --- On initial load, save the empty canvas state ---
 saveState();
 
-// === Download ===
+// --- Download ---
 function downloadImage() {
   const dataURL = canvas.toDataURL({ format: 'png' });
   const link = document.createElement('a');
