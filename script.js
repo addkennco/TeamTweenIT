@@ -35,58 +35,26 @@ fabric.Object.prototype.set({
   })(fabric.Object.prototype.toObject);
 
   // --- Upload image ---
-  document.getElementById('uploader').addEventListener('change', function(e) {
-    const file = e.target.files[0];
-    if (!file) return;
+document.getElementById('uploader').addEventListener('change', function(e) {
+  const file = e.target.files[0];
+  if (!file) return;
 
-    const reader = new FileReader();
-    reader.onload = function(f) {
-      fabric.Image.fromURL(f.target.result, function(img) {
-        let scale = Math.min(canvas.width / img.width, canvas.height / img.height);
-        img.scale(scale);
-        img.set({ left: 0, top: 0, selectable: true, hasControls: true, hasBorders: true, isSticker: false });
+  const reader = new FileReader();
+  reader.onload = function(f) {
+    fabric.Image.fromURL(f.target.result, function(img) {
+      let scale = Math.min(canvas.width / img.width, canvas.height / img.height);
+      img.scale(scale);
 
-        // --- Delete Control ---
-        img.setControlsVisibility({ mt: false, mb: false, ml: false, mr: false, bl: false, br: false, tl: false, tr: true });
-        img.controls.tr = new fabric.Control({
-          x: 0.5,
-          y: -0.5,
-          offsetX: 16,
-          offsetY: -16,
-          cursorStyle: 'pointer',
-          mouseUpHandler: function(eventData, transform) {
-            canvas.remove(transform.target);
-            canvas.renderAll();
-            saveState();
-          },
-          render: function(ctx, left, top, styleOverride, fabricObject) {
-            fabric.Control.prototype.render.call(this, ctx, left, top, styleOverride, fabricObject);
-            ctx.fillStyle = 'black';
-            ctx.font = 'bold 12px sans-serif';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.fillText('\u2717', left, top);
-          }
-        });
+      img.set({
+        left: 0,
+        top: 0,
+        selectable: true,
+        hasControls: true,
+        hasBorders: true,
+        isSticker: false
+      });
 
-        canvas.add(img);
-        canvas.setActiveObject(img);
-        restackStickers();
-      }, { crossOrigin: 'anonymous' });
-
-      e.target.value = ''; // Clear file input
-    };
-
-    reader.readAsDataURL(file);
-  });
-
-  // --- Add sticker ---
-  function addSticker(src) {
-    fabric.Image.fromURL(src, function(img) {
-      img.set({ left: 50, top: 50, hasControls: true, hasBorders: true, selectable: true, stickerSrc: src, isSticker: true });
-      img.scaleToWidth(100);
-
-      // --- Delete Control ---
+      // --- Delete control (top-right) ---
       img.controls.tr = new fabric.Control({
         x: 0.5,
         y: -0.5,
@@ -112,8 +80,55 @@ fabric.Object.prototype.set({
       canvas.setActiveObject(img);
       restackStickers();
     }, { crossOrigin: 'anonymous' });
-  }
-  window.addSticker = addSticker;
+
+    e.target.value = ''; // Clear file input
+  };
+
+  reader.readAsDataURL(file);
+});
+
+  // --- Add sticker ---
+function addSticker(src) {
+  fabric.Image.fromURL(src, function(img) {
+    img.set({
+      left: 50,
+      top: 50,
+      selectable: true,
+      hasControls: true,
+      hasBorders: true,
+      stickerSrc: src,
+      isSticker: true
+    });
+    img.scaleToWidth(100);
+
+    // --- Delete control (top-right) ---
+    img.controls.tr = new fabric.Control({
+      x: 0.5,
+      y: -0.5,
+      offsetX: 16,
+      offsetY: -16,
+      cursorStyle: 'pointer',
+      mouseUpHandler: function(eventData, transform) {
+        canvas.remove(transform.target);
+        canvas.renderAll();
+        saveState();
+      },
+      render: function(ctx, left, top, styleOverride, fabricObject) {
+        fabric.Control.prototype.render.call(this, ctx, left, top, styleOverride, fabricObject);
+        ctx.fillStyle = 'black';
+        ctx.font = 'bold 12px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('\u2717', left, top);
+      }
+    });
+
+    canvas.add(img);
+    canvas.setActiveObject(img);
+    restackStickers();
+  }, { crossOrigin: 'anonymous' });
+}
+window.addSticker = addSticker;
 
   // --- Sticker metadata ---
   const stickers = [
