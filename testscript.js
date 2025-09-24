@@ -1,42 +1,33 @@
 const canvas = new fabric.Canvas('c');
-let backgroundImage;
 
-// upload background
+// upload background as a regular object
 document.getElementById('uploader').addEventListener('change', function(e) {
   const file = e.target.files[0];
+  if (!file) return;
   const reader = new FileReader();
 
   reader.onload = function(f) {
     fabric.Image.fromURL(f.target.result, function(img) {
-      // scale background to fit canvas
-      img.scaleToWidth(canvas.width);
-      img.scaleToHeight(canvas.height);
+      // Delete all objects (optional, if you only want one image at a time)
+      // canvas.clear();
 
-     document.getElementById('uploader').addEventListener('change', function(e) {
-  const file = e.target.files[0];
-  const reader = new FileReader();
-
-  reader.onload = function(f) {
-    fabric.Image.fromURL(f.target.result, function(img) {
-      // scale proportionally
+      // Scale proportionally to fit canvas
       let scale = Math.min(
         canvas.width / img.width,
         canvas.height / img.height
       );
       img.scale(scale);
-      img.set({ left: 0, top: 0, selectable: true }); // Make it selectable
+      img.set({ left: 0, top: 0, selectable: true });
 
       canvas.add(img);
-      canvas.setActiveObject(img); // Optional: select after adding
+      canvas.setActiveObject(img);
       canvas.renderAll();
-      console.log("Image added as object!");
+      console.log("Image added as object!", img);
+      console.log("Canvas objects:", canvas.getObjects());
     }, { crossOrigin: 'anonymous' });
   };
 
-  if (file) reader.readAsDataURL(file);
-});
-
-  if (file) reader.readAsDataURL(file);
+  reader.readAsDataURL(file);
 });
 
 // add sticker
@@ -46,12 +37,14 @@ function addSticker(src) {
       left: 50,
       top: 50,
       hasControls: true,
-      hasBorders: true
+      hasBorders: true,
+      selectable: true
     });
     img.scaleToWidth(100);
     canvas.add(img);
+    canvas.setActiveObject(img);
     canvas.renderAll();
-    console.log("Sticker added!");
+    console.log("Sticker added!", img);
   }, { crossOrigin: 'anonymous' });
 }
 
