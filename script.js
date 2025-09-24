@@ -29,6 +29,22 @@ document.getElementById('uploader').addEventListener('change', function(e) {
   reader.readAsDataURL(file);
 });
 
+// click timer because it keeps reading double clicks as single clicks
+let clickTimer = null;
+function stickerButtonHandler(src) {
+  if (clickTimer) {
+    clearTimeout(clickTimer);
+    clickTimer = null;
+    removeSticker(src); // Double-click detected
+  } else {
+    clickTimer = setTimeout(() => {
+      addSticker(src);
+      clickTimer = null;
+    }, 250); // 250ms: typical double-click gap
+  }
+}
+window.stickerButtonHandler = stickerButtonHandler;
+
 // add sticker
 function addSticker(src) {
   fabric.Image.fromURL(src, function(img) {
