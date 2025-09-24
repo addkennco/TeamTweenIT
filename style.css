@@ -72,6 +72,9 @@ body {
   transform: scale(1.2); /* slightly enlarge on hover */
 }
 
+.recently-used-text {
+  text-align: left;
+}
   .font-selector {
   font-size: 14px;    
   padding: 12px 16px;    
