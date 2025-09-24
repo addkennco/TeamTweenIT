@@ -35,7 +35,7 @@ document.getElementById('uploader').addEventListener('change', function(e) {
     fabric.Image.fromURL(f.target.result, function(img) {
       let scale = Math.min(canvas.width / img.width, canvas.height / img.height);
       img.scale(scale);
-      img.set({ left: 0, top: 0, selectable: true, isSticker: false });
+      img.set({ left: 0, top: 0, selectable: true,  hasControls: true, isSticker: false });
 
       // --- Delete Control ---
       img.setControlsVisibility({
