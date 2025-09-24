@@ -257,6 +257,64 @@ window.showHelp = function() {
   alert(helpText);
 };
 
+  window.addText = function() {
+  const text = new fabric.Textbox('Your text here', {
+    left: 100,
+    top: 100,
+    fontFamily: 'Arial Rounded MT Bold', // default
+    fontSize: 30,
+    fill: '#000000', // default color
+    selectable: true,
+    hasControls: true,
+    hasBorders: true,
+  });
+
+  // Add delete control (top-right)
+  text.controls.tr = new fabric.Control({
+    x: 0.5,
+    y: -0.5,
+    offsetX: 16,
+    offsetY: -16,
+    cursorStyle: 'pointer',
+    mouseUpHandler: function(eventData, transform) {
+      canvas.remove(transform.target);
+      canvas.renderAll();
+      saveState();
+    },
+    render: function(ctx, left, top, styleOverride, fabricObject) {
+      fabric.Control.prototype.render.call(this, ctx, left, top, styleOverride, fabricObject);
+      ctx.fillStyle = 'black';
+      ctx.font = 'bold 12px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('\u2717', left, top);
+    }
+  });
+
+  canvas.add(text);
+  canvas.setActiveObject(text);
+  canvas.renderAll();
+  restackStickers();
+  saveState();
+};
+
+document.getElementById('font-selector').addEventListener('change', function() {
+  const active = canvas.getActiveObject();
+  if (active && active.type === 'textbox') {
+    active.set('fontFamily', this.value);
+    canvas.renderAll();
+    saveState();
+  }
+});
+
+  document.getElementById('text-color-picker').addEventListener('input', function() {
+  const active = canvas.getActiveObject();
+  if (active && active.type === 'textbox') {
+    active.set('fill', this.value);
+    canvas.renderAll();
+    saveState();
+  }
+});
   
   // --- Undo/redo stacks ---
   let undoStack = [];
