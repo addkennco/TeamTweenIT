@@ -7,11 +7,18 @@ document.getElementById('uploader').addEventListener('change', function(e) {
   const reader = new FileReader();
   reader.onload = function(f) {
     fabric.Image.fromURL(f.target.result, function(img) {
-      canvas.clear(); // clear previous
-      img.scaleToWidth(600);
-      img.scaleToHeight(600);
-      canvas.add(img);
-      canvas.sendToBack(img);
+      const scale = Math.min(
+        canvas.width / img.width,
+        canvas.height / img.height
+      );
+      img.scale(scale);
+
+      canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {
+        originX: 'center',
+        originY: 'center',
+        left: canvas.width / 2,
+        top: canvas.height / 2
+      });
     });
   };
   reader.readAsDataURL(file);
