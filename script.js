@@ -56,6 +56,27 @@ function addSticker(src) {
       isSticker: true
     });
     img.scaleToWidth(100);
+
+    // --- Delete control ---
+    img.setControlsVisibility({
+      mt: false, mb: false, ml: false, mr: false,
+      bl: false, br: false, tl: false, tr: true
+    });
+
+    img.controls.tr = new fabric.Control({
+      x: 0.5,
+      y: -0.5,
+      offsetX: 16,
+      offsetY: -16,
+      cursorStyle: 'pointer',
+      mouseUpHandler: function(eventData, transform) {
+        const obj = transform.target;
+        canvas.remove(obj);
+        canvas.renderAll();
+        saveState();
+      }
+    });
+    
     canvas.add(img);
     canvas.setActiveObject(img);
     restackStickers();
@@ -71,32 +92,6 @@ function removeSticker(src) {
   console.log("Removed stickers for", src);
 }
 window.removeSticker = removeSticker;
-
-// --- Delete option on select ---
-img.setControlsVisibility({
-  mt: false, // top middle
-  mb: false, // bottom middle
-  ml: false, // middle left
-  mr: false, // middle right
-  bl: false,
-  br: false,
-  tl: false,
-  tr: true  // top-right, we can use as delete
-});
-
-img.controls.tr = new fabric.Control({
-  x: 0.5,
-  y: -0.5,
-  offsetX: 16,
-  offsetY: -16,
-  cursorStyle: 'pointer',
-  mouseUpHandler: function(eventData, transform) {
-    const obj = transform.target;
-    canvas.remove(obj);
-    canvas.renderAll();
-    saveState();
-  }
-});
 
 // --- Double click/single click sticker logic ---
 let clickTimer = null;
