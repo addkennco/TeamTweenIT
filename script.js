@@ -15,18 +15,13 @@ fabric.Object.prototype.set({
 
   // --- Helper to restack stickers above everything else ---
   function restackStickers() {
-    const objs = canvas.getObjects();
-
-    objs.forEach(obj => {
-      if (!obj.isSticker) canvas.sendToBack(obj);
-    });
-
-    objs.forEach(obj => {
-      if (obj.isSticker) canvas.bringToFront(obj);
-    });
-
-    canvas.renderAll();
-  }
+  canvas.getObjects().forEach(obj => {
+    if (obj.isSticker) {
+      canvas.bringToFront(obj);
+    }
+  });
+  canvas.renderAll();
+}
 
   fabric.Object.prototype.toObject = (function(toObject) {
     return function(properties) {
@@ -236,16 +231,17 @@ window.addSticker = addSticker;
   });
 
 // Clear the canvas completely
-function clearCanvas() {
+window.clearCanvas = function() {
   if (confirm("Are you sure you want to clear the canvas?")) {
     canvas.clear();
-    canvas.backgroundColor = 'lightgrey'; // or your desired background
+    canvas.backgroundColor = 'lightgrey';
     canvas.renderAll();
+    saveState();
   }
-}
+};
 
-// Show a help popup
-function showHelp() {
+// Help Popup
+window.showHelp = function() {
   const helpText = `
   Welcome to the Team TweenIT Postmaker! 🎨
 
@@ -258,8 +254,8 @@ function showHelp() {
   
   Have fun creating!
   `;
-  alert(helpText); // simple popup
-}
+  alert(helpText);
+};
 
   
   // --- Undo/redo stacks ---
