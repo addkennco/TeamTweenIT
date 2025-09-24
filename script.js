@@ -210,16 +210,15 @@ saveState();
 function downloadImage() {
   canvas.discardActiveObject();
   canvas.renderAll();
-  const dataURL = canvas.toDataURL({ format: 'png' });
 
-  // Create a real anchor and dispatch a MouseEvent
-  const link = document.createElement('a');
-  link.href = dataURL;
-  link.download = 'final.png';
-  document.body.appendChild(link);
+  // create dataURL (will throw if canvas is tainted)
+  const dataURL = canvas.toDataURL({ format: 'png', quality: 1 });
 
-  // Trigger a real user-like click
-  link.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
-
-  document.body.removeChild(link);
+  // create and click a temp anchor
+  const a = document.createElement('a');
+  a.href = dataURL.replace('image/png', 'image/octet-stream');
+  a.download = 'final.png';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
 }
