@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
-<link href="https://fonts.googleapis.com/css2?family=Lato:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@900&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Sour+Gummy&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Caprasimo&display=swap" rel="stylesheet">
@@ -33,7 +33,6 @@
   <img src="icons/eraser.png" alt="Clear Canvas" onclick="clearCanvas()" class="icon-button">
   <img src="icons/question.png" alt="Help" onclick="showHelp()" class="icon-button">
 </div>
-  <br><br>
  <select id="font-selector" class="font-preview">
   <option value="Lato" style="font-family: 'Lato', sans-serif;">Bold</option>
   <option value="Pacifico" style="font-family: 'Pacifico', cursive;">Fancy</option>
@@ -42,9 +41,20 @@
   <option value="Jost" style="font-family: 'Jost', sans-serif;">Smooth</option>
 </select>
     <input type="color" id="text-color-picker" value="#000000">
+    <label for="font-size">Size:</label>
+<input
+  id="font-size"
+  type="range"
+  min="12"
+  max="120"
+  value="40"
+  step="2"
+  style="width:200px;"
+>
+<span id="font-size-display">40</span>px
   <!-- Canvas -->
   <canvas id="c" width="600" height="600"></canvas>
-<br><br>
+<br>
     <!-- Search stickers -->
 <div id="sticker-search-container">
   <input type="text" id="sticker-search" placeholder="Type to search...">
