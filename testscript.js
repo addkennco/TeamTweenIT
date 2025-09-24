@@ -1,19 +1,6 @@
-console.log("JS loaded");
-
 const canvas = new fabric.Canvas('c');
 
-// Set canvas background color and draw a rectangle to confirm rendering
-canvas.setBackgroundColor('red', canvas.renderAll.bind(canvas));
-canvas.add(new fabric.Rect({
-  left: 50,
-  top: 50,
-  fill: 'blue',
-  width: 100,
-  height: 100
-}));
-canvas.renderAll();
-
-// upload background as a regular object
+// upload background image as an object
 document.getElementById('uploader').addEventListener('change', function(e) {
   const file = e.target.files[0];
   if (!file) return;
@@ -21,10 +8,7 @@ document.getElementById('uploader').addEventListener('change', function(e) {
 
   reader.onload = function(f) {
     fabric.Image.fromURL(f.target.result, function(img) {
-      if (!img) {
-        console.error("Failed to load uploaded image");
-        return;
-      }
+      // Scale to fit canvas
       let scale = Math.min(
         canvas.width / img.width,
         canvas.height / img.height
@@ -35,7 +19,6 @@ document.getElementById('uploader').addEventListener('change', function(e) {
       canvas.setActiveObject(img);
       canvas.renderAll();
       console.log("Image added as object!", img);
-      console.log("Canvas objects:", canvas.getObjects());
     }, { crossOrigin: 'anonymous' });
   };
 
@@ -45,10 +28,6 @@ document.getElementById('uploader').addEventListener('change', function(e) {
 // add sticker
 function addSticker(src) {
   fabric.Image.fromURL(src, function(img) {
-    if (!img) {
-      console.error("Failed to load sticker:", src);
-      return;
-    }
     img.set({
       left: 50,
       top: 50,
@@ -63,6 +42,7 @@ function addSticker(src) {
     console.log("Sticker added!", img);
   }, { crossOrigin: 'anonymous' });
 }
+window.addSticker = addSticker;
 
 // download final image
 function downloadImage() {
@@ -72,3 +52,4 @@ function downloadImage() {
   link.download = 'final.png';
   link.click();
 }
+window.downloadImage = downloadImage;
