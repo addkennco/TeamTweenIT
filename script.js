@@ -1,25 +1,31 @@
 // Fabric.js canvas
-const canvas = new fabric.Canvas('c');
+const canvas = new fabric.Canvas('c', {
+  backgroundColor: 'transparent'
+});
 
 // Upload user image
 document.getElementById('uploader').addEventListener('change', function(e) {
   const file = e.target.files[0];
+  if (!file) return;
+
   const reader = new FileReader();
   reader.onload = function(f) {
     fabric.Image.fromURL(f.target.result, function(img) {
+      // Scale the image to fit within canvas
       const scale = Math.min(
         canvas.width / img.width,
         canvas.height / img.height
       );
       img.scale(scale);
 
+      // Set as background image
       canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {
         originX: 'center',
         originY: 'center',
         left: canvas.width / 2,
         top: canvas.height / 2
       });
-    });
+    }, { crossOrigin: 'anonymous' });
   };
   reader.readAsDataURL(file);
 });
@@ -30,7 +36,9 @@ function addSticker(src) {
     img.scale(0.5);
     img.set({ left: 100, top: 100 });
     canvas.add(img);
-  });
+    canvas.setActiveObject(img); // make it draggable right away
+    canvas.renderAll();
+  }, { crossOrigin: 'anonymous' });
 }
 
 // Download final image
@@ -40,7 +48,4 @@ document.getElementById('download').addEventListener('click', function() {
     quality: 1
   });
   const link = document.createElement('a');
-  link.href = dataURL;
-  link.download = 'final-image.png';
-  link.click();
-});
+  link.href
