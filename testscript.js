@@ -1,20 +1,20 @@
-console.log("JS loaded")
-
+console.log("JS loaded");
 const canvas = new fabric.Canvas('c');
 
+// Set canvas background color
 canvas.setBackgroundColor('red', canvas.renderAll.bind(canvas));
 
-// Debug: add a blue rectangle to confirm drawing works
+// Add a blue rectangle for testing
 canvas.add(new fabric.Rect({
-  left: 10,
-  top: 10,
+  left: 50,
+  top: 50,
   fill: 'blue',
   width: 100,
   height: 100
 }));
 canvas.renderAll();
 
-// upload background as a regular object
+// upload image as a regular object
 document.getElementById('uploader').addEventListener('change', function(e) {
   const file = e.target.files[0];
   if (!file) return;
@@ -22,9 +22,6 @@ document.getElementById('uploader').addEventListener('change', function(e) {
 
   reader.onload = function(f) {
     fabric.Image.fromURL(f.target.result, function(img) {
-      // Delete all objects (optional, if you only want one image at a time)
-      // canvas.clear();
-
       // Scale proportionally to fit canvas
       let scale = Math.min(
         canvas.width / img.width,
