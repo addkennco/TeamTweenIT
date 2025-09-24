@@ -19,6 +19,7 @@ document.getElementById('uploader').addEventListener('change', function(e) {
       img.scale(scale);
       img.set({ left: 0, top: 0, selectable: true });
       canvas.add(img);
+      canvas.sendToBack(img);
       canvas.setActiveObject(img);
       canvas.renderAll();
       console.log("Image added as object!", img);
@@ -58,6 +59,7 @@ function addSticker(src) {
     });
     img.scaleToWidth(100);
     canvas.add(img);
+    canvas.bringToFront(img);
     canvas.setActiveObject(img);
     canvas.renderAll();
     console.log("Sticker added!", img);
