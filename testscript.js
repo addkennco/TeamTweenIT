@@ -12,11 +12,29 @@ document.getElementById('uploader').addEventListener('change', function(e) {
       img.scaleToWidth(canvas.width);
       img.scaleToHeight(canvas.height);
 
-      backgroundImage = img;
-      canvas.setBackgroundImage(backgroundImage, canvas.renderAll.bind(canvas));
-      console.log("Background set!");
+     document.getElementById('uploader').addEventListener('change', function(e) {
+  const file = e.target.files[0];
+  const reader = new FileReader();
+
+  reader.onload = function(f) {
+    fabric.Image.fromURL(f.target.result, function(img) {
+      // scale proportionally
+      let scale = Math.min(
+        canvas.width / img.width,
+        canvas.height / img.height
+      );
+      img.scale(scale);
+      img.set({ left: 0, top: 0, selectable: true }); // Make it selectable
+
+      canvas.add(img);
+      canvas.setActiveObject(img); // Optional: select after adding
+      canvas.renderAll();
+      console.log("Image added as object!");
     }, { crossOrigin: 'anonymous' });
   };
+
+  if (file) reader.readAsDataURL(file);
+});
 
   if (file) reader.readAsDataURL(file);
 });
