@@ -3,9 +3,11 @@ canvas.setBackgroundColor('lightgrey', canvas.renderAll.bind(canvas));
 
 // --- Helper to restack stickers above everything else ---
 function restackStickers() {
+  // Put all non-sticker images at the back
   canvas.getObjects().forEach(obj => {
     if (!obj.isSticker) canvas.sendToBack(obj);
   });
+  // Bring all stickers to the front
   canvas.getObjects().forEach(obj => {
     if (obj.isSticker) canvas.bringToFront(obj);
   });
