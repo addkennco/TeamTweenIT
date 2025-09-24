@@ -29,47 +29,50 @@ function restackStickers() {
 document.getElementById('uploader').addEventListener('change', function(e) {
   const file = e.target.files[0];
   if (!file) return;
+
   const reader = new FileReader();
   reader.onload = function(f) {
     fabric.Image.fromURL(f.target.result, function(img) {
       let scale = Math.min(canvas.width / img.width, canvas.height / img.height);
       img.scale(scale);
       img.set({ left: 0, top: 0, selectable: true, isSticker: false });
-       // --- Delete control ---
-    img.setControlsVisibility({
-      mt: false, mb: false, ml: false, mr: false,
-      bl: false, br: false, tl: false, tr: true
-    });
 
-    img.controls.tr = new fabric.Control({
-  x: 0.5,
-  y: -0.5,
-  offsetX: 16,
-  offsetY: -16,
-  cursorStyle: 'pointer',
-  mouseUpHandler: function(eventData, transform) {
-    const obj = transform.target;
-    canvas.remove(obj);
-    canvas.renderAll();
-    saveState();
-  },
-  render: function(ctx, left, top, styleOverride, fabricObject) {
-    // draw the default control box
-    fabric.Control.prototype.render.call(this, ctx, left, top, styleOverride, fabricObject);
+      // --- Delete Control ---
+      img.setControlsVisibility({
+        mt: false, mb: false, ml: false, mr: false,
+        bl: false, br: false, tl: false, tr: true
+      });
+      img.controls.tr = new fabric.Control({
+        x: 0.5,
+        y: -0.5,
+        offsetX: 16,
+        offsetY: -16,
+        cursorStyle: 'pointer',
+        mouseUpHandler: function(eventData, transform) {
+          const obj = transform.target;
+          canvas.remove(obj);
+          canvas.renderAll();
+          saveState();
+        },
+        render: function(ctx, left, top, styleOverride, fabricObject) {
+          fabric.Control.prototype.render.call(this, ctx, left, top, styleOverride, fabricObject);
+          ctx.fillStyle = 'black';
+          ctx.font = 'bold 12px sans-serif';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText('\u2717', left, top);
+        }
+      });
 
-    // add a unicode "×" in the middle
-    ctx.fillStyle = 'black';      // color of the X
-    ctx.font = 'bold 12px sans-serif';
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText('\u2717', left, top);
-  }
-});
       canvas.add(img);
       canvas.setActiveObject(img);
       restackStickers();
     }, { crossOrigin: 'anonymous' });
+
+    // **Clear the file input so same file can be uploaded again**
+    e.target.value = '';
   };
+
   reader.readAsDataURL(file);
 });
 
