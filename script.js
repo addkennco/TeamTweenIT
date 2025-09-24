@@ -207,7 +207,7 @@ window.redo = redo;
 saveState();
 
 // --- Download ---
-function downloadImage() {
+function download() {
   canvas.discardActiveObject();
   canvas.renderAll();
 
