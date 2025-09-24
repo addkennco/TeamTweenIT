@@ -1,3 +1,5 @@
+console.log("JS loaded");
+
 const canvas = new fabric.Canvas('c');
 
 canvas.setBackgroundColor('red', canvas.renderAll.bind(canvas));
