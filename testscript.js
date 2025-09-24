@@ -1,19 +1,6 @@
 console.log("JS loaded");
 const canvas = new fabric.Canvas('c');
 
-// Set canvas background color
-canvas.setBackgroundColor('red', canvas.renderAll.bind(canvas));
-
-// Add a blue rectangle for testing
-canvas.add(new fabric.Rect({
-  left: 50,
-  top: 50,
-  fill: 'blue',
-  width: 100,
-  height: 100
-}));
-canvas.renderAll();
-
 // upload image as a regular object
 document.getElementById('uploader').addEventListener('change', function(e) {
   const file = e.target.files[0];
@@ -32,7 +19,20 @@ document.getElementById('uploader').addEventListener('change', function(e) {
 
   reader.readAsDataURL(file);
 });
+    // Set canvas background color
+canvas.setBackgroundColor('red', canvas.renderAll.bind(canvas));
 
+// Add a blue rectangle for testing
+canvas.add(new fabric.Rect({
+  left: 50,
+  top: 50,
+  fill: 'blue',
+  width: 100,
+  height: 100
+}));
+canvas.renderAll();
+
+    
 // add sticker
 function addSticker(src) {
   fabric.Image.fromURL(src, function(img) {
