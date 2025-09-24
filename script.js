@@ -5,6 +5,14 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   canvas.setBackgroundColor('lightgrey', canvas.renderAll.bind(canvas));
 
+  // --- Make all object borders and corners black ---
+fabric.Object.prototype.set({
+  borderColor: 'black',
+  cornerStrokeColor: 'black',
+  cornerSize: 12,
+  transparentCorners: true
+});
+
   // --- Helper to restack stickers above everything else ---
   function restackStickers() {
     const objs = canvas.getObjects();
