@@ -59,7 +59,7 @@ button:hover {
 /* Recently used stickers container */
 #recent-stickers-container {
   max-width: 600px; 
-  height: 250px;     
+  height: 150px;     
   overflow-x: auto; /* horizontal scroll */
   display: flex;
   flex-wrap: nowrap;
