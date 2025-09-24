@@ -1,23 +1,24 @@
 const canvas = new fabric.Canvas('c');
 canvas.setBackgroundColor('lightgrey', canvas.renderAll.bind(canvas));
 
-// --- Helper to restack stickers above everything else ---
+// === Helper to restack stickers above everything else ===
 function restackStickers() {
-  // Bring all non-sticker images (backgrounds) to back first for good measure
+  // Bring all non-sticker images (backgrounds) to back first
   canvas.getObjects().forEach(obj => {
-    if (obj.isSticker !== true) {
+    if (!obj.isSticker) {
       canvas.sendToBack(obj);
     }
   });
-  // Then bring all stickers to front
+  // Then bring all stickers to front, in order of addition
   canvas.getObjects().forEach(obj => {
-    if (obj.isSticker === true) {
+    if (obj.isSticker) {
       canvas.bringToFront(obj);
     }
   });
+  canvas.renderAll();
 }
 
-// --- Upload image as a regular object (backgrounds/images) ---
+// === Upload image as a regular object (backgrounds/images) ===
 document.getElementById('uploader').addEventListener('change', function(e) {
   const file = e.target.files[0];
   if (!file) return;
@@ -34,7 +35,6 @@ document.getElementById('uploader').addEventListener('change', function(e) {
       canvas.add(img);
       canvas.setActiveObject(img);
       restackStickers();
-      canvas.renderAll();
       console.log("Image added as object!", img);
     }, { crossOrigin: 'anonymous' });
   };
@@ -42,7 +42,7 @@ document.getElementById('uploader').addEventListener('change', function(e) {
   reader.readAsDataURL(file);
 });
 
-// --- Double click/single click sticker logic ---
+// === Double click/single click sticker logic ===
 let clickTimer = null;
 function stickerButtonHandler(src) {
   if (clickTimer) {
@@ -58,7 +58,7 @@ function stickerButtonHandler(src) {
 }
 window.stickerButtonHandler = stickerButtonHandler;
 
-// --- Add sticker (always bring to front, tag as sticker) ---
+// === Add sticker (always bring to front, tag as sticker) ===
 function addSticker(src) {
   fabric.Image.fromURL(src, function(img) {
     img.set({
@@ -74,23 +74,21 @@ function addSticker(src) {
     canvas.add(img);
     canvas.setActiveObject(img);
     restackStickers();
-    canvas.renderAll();
     console.log("Sticker added!", img);
   }, { crossOrigin: 'anonymous' });
 }
 window.addSticker = addSticker;
 
-// --- Remove sticker by source ---
+// === Remove sticker by source ===
 function removeSticker(src) {
   const toRemove = canvas.getObjects('image').filter(img => img.stickerSrc === src);
   toRemove.forEach(obj => canvas.remove(obj));
-  canvas.renderAll();
   restackStickers();
   console.log("Removed stickers for", src);
 }
 window.removeSticker = removeSticker;
 
-// --- Undo/redo stacks ---
+// === Undo/redo stacks ===
 let undoStack = [];
 let redoStack = [];
 const maxHistory = 25;
@@ -103,22 +101,19 @@ function saveState() {
   if (undoStack.length > maxHistory) undoStack.shift();
 }
 
-// --- Always restack stickers after any object change ---
+// === Always restack stickers after any object or selection change ===
 canvas.on('object:added', function() { restackStickers(); saveState(); });
 canvas.on('object:modified', function() { restackStickers(); saveState(); });
 canvas.on('object:removed', function() { restackStickers(); saveState(); });
+canvas.on('selection:created', function() { restackStickers(); });
+canvas.on('selection:updated', function() { restackStickers(); });
 
-// --- Also restack after selection events (e.g. user clicks an image) ---
-canvas.on('selection:created', restackStickers);
-canvas.on('selection:updated', restackStickers);
-
-// --- Undo/redo functions, restack after restoring ---
+// === Undo/redo functions, restack after restoring ===
 function undo() {
   if (undoStack.length > 1) {
     isRestoring = true;
     redoStack.push(undoStack.pop());
     canvas.loadFromJSON(undoStack[undoStack.length - 1], () => {
-      canvas.renderAll();
       restackStickers();
       isRestoring = false;
     });
@@ -132,7 +127,6 @@ function redo() {
     const state = redoStack.pop();
     undoStack.push(state);
     canvas.loadFromJSON(state, () => {
-      canvas.renderAll();
       restackStickers();
       isRestoring = false;
     });
@@ -140,10 +134,10 @@ function redo() {
 }
 window.redo = redo;
 
-// --- On initial load, save the empty canvas state ---
+// === On initial load, save the empty canvas state ===
 saveState();
 
-// --- Download ---
+// === Download ===
 function downloadImage() {
   const dataURL = canvas.toDataURL({ format: 'png' });
   const link = document.createElement('a');
