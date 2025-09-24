@@ -257,6 +257,7 @@ window.showHelp = function() {
   alert(helpText);
 };
 
+  // --- Text Editor ---
   window.addText = function() {
   const text = new fabric.Textbox('Your text here', {
     left: 100,
@@ -314,6 +315,21 @@ document.getElementById('font-selector').addEventListener('change', e => {
     active.set('fill', this.value);
     canvas.renderAll();
     saveState();
+  }
+});
+
+  // --- Font Size ---
+  const sizeInput = document.getElementById('font-size');
+const sizeDisplay = document.getElementById('font-size-display');
+
+sizeInput.addEventListener('input', () => {
+  const obj = canvas.getActiveObject();
+  const newSize = parseInt(sizeInput.value, 10);
+  sizeDisplay.textContent = newSize;
+
+  if (obj && obj.type === 'textbox') {
+    obj.set('fontSize', newSize);
+    canvas.requestRenderAll();
   }
 });
   
