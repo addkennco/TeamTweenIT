@@ -129,30 +129,114 @@ function addSticker(src) {
 }
 window.addSticker = addSticker;
 
-// --- Remove sticker by source ---
-function removeSticker(src) {
-  const toRemove = canvas.getObjects('image').filter(img => img.stickerSrc === src);
-  toRemove.forEach(obj => canvas.remove(obj));
-  restackStickers();
-  console.log("Removed stickers for", src);
-}
-window.removeSticker = removeSticker;
+// --- Sticker metadata --- 
+const stickers = [
+  { name: 'TweenIT Logo 1', src: 'icons/TweenitLogo1.png' },
+  { name: 'TweenIT Logo 2', src: 'icons/TweenitLogo2.png' },
+  { name: 'TweenIT Logo 3', src: 'icons/TweenitLogo3.png' },
+  { name: 'Squiggle 1', src: 'icons/Squiggle1.png' },
+  { name: 'Squiggle 2', src: 'icons/Squiggle2.png' },
+  { name: 'Squiggle 3', src: 'icons/Squiggle3.png' },
+  { name: 'Bunny', src: 'icons/Bunny.png' },
+  { name: 'Puppin', src: 'icons/Puppin.png' },
+  { name: 'Skateboard', src: 'icons/Skateboard.png' },
+  { name: 'Sunglasses', src: 'icons/Sunglasses.png' },
+  { name: 'Blue Star', src: 'icons/StarBlue.png' },
+  { name: 'Red Stars', src: 'icons/StarsRed.png' },
+  { name: 'Multicolor Stars', src: 'icons/StarsMulti.png' },
+  { name: 'Speech Bubble', src: 'icons/Hey.png' },
+  // Kids' tags
+  { name: 'John Discount Tag 1', src: 'icons/John_Blue.png' },
+  { name: 'John Discount Tag 2', src: 'icons/John_Pink.png' },
+  { name: 'John Discount Tag 3', src: 'icons/John_Yellow.png' },
+  { name: 'John Discount Tag 4', src: 'icons/John_Green.png' },
+  { name: 'Erynn Discount Tag 1', src: 'icons/Erynn_Blue.png' },
+  { name: 'Erynn Discount Tag 2', src: 'icons/Erynn_Pink.png' },
+  { name: 'Erynn Discount Tag 3', src: 'icons/Erynn_Yellow.png' },
+  { name: 'Erynn Discount Tag 4', src: 'icons/Erynn_Green.png' },
+  { name: 'Olivia Discount Tag 1', src: 'icons/Olivia_Blue.png' },
+  { name: 'Olivia Discount Tag 2', src: 'icons/Olivia_Pink.png' },
+  { name: 'Olivia Discount Tag 3', src: 'icons/Olivia_Yellow.png' },
+  { name: 'Olivia Discount Tag 4', src: 'icons/Olivia_Green.png' },
+  { name: 'Amy Discount Tag 1', src: 'icons/Amy_Blue.png' },
+  { name: 'Amy Discount Tag 2', src: 'icons/Amy_Pink.png' },
+  { name: 'Amy Discount Tag 3', src: 'icons/Amy_Yellow.png' },
+  { name: 'Amy Discount Tag 4', src: 'icons/Amy_Green.png' },
+  { name: 'Arion Discount Tag 1', src: 'icons/Arion_Blue.png' },
+  { name: 'Arion Discount Tag 2', src: 'icons/Arion_Pink.png' },
+  { name: 'Arion Discount Tag 3', src: 'icons/Arion_Yellow.png' },
+  { name: 'Arion Discount Tag 4', src: 'icons/Arion_Green.png' },
+  { name: 'Alyssa Discount Tag 1', src: 'icons/Alyssa_Blue.png' },
+  { name: 'Alyssa Discount Tag 2', src: 'icons/Alyssa_Pink.png' },
+  { name: 'Alyssa Discount Tag 3', src: 'icons/Alyssa_Yellow.png' },
+  { name: 'Alyssa Discount Tag 4', src: 'icons/Alyssa_Green.png' },
+  { name: 'Addie Discount Tag 1', src: 'icons/Addie_Blue.png' },
+  { name: 'Addie Discount Tag 2', src: 'icons/Addie_Pink.png' },
+  { name: 'Addie Discount Tag 3', src: 'icons/Addie_Yellow.png' },
+  { name: 'Addie Discount Tag 4', src: 'icons/Addie_Green.png' },
+  { name: 'Sienna Discount Tag 1', src: 'icons/Sienna_Blue.png' },
+  { name: 'Sienna Discount Tag 2', src: 'icons/Sienna_Pink.png' },
+  { name: 'Sienna Discount Tag 3', src: 'icons/Sienna_Yellow.png' },
+  { name: 'Sienna Discount Tag 4', src: 'icons/Sienna_Green.png' },
+  { name: 'Naoki Discount Tag 1', src: 'icons/Naoki_Blue.png' },
+  { name: 'Naoki Discount Tag 2', src: 'icons/Naoki_Pink.png' },
+  { name: 'Naoki Discount Tag 3', src: 'icons/Naoki_Yellow.png' },
+  { name: 'Naoki Discount Tag 4', src: 'icons/Naoki_Green.png' },
+];
 
-// --- Double click/single click sticker logic ---
-let clickTimer = null;
-function stickerButtonHandler(src) {
-  if (clickTimer) {
-    clearTimeout(clickTimer);
-    clickTimer = null;
-    removeSticker(src); // Double-click detected
-  } else {
-    clickTimer = setTimeout(() => {
-      addSticker(src);
-      clickTimer = null;
-    }, 250);
-  }
+// --- Recently used stickers ---
+let recentStickers = [];
+
+function renderRecentStickers() {
+  const container = document.getElementById('recent-stickers');
+  container.innerHTML = '';
+  recentStickers.forEach(src => {
+    const btn = document.createElement('button');
+    btn.style.width = '40px';
+    btn.style.height = '40px';
+    btn.style.backgroundImage = `url(${src})`;
+    btn.style.backgroundSize = 'contain';
+    btn.style.backgroundRepeat = 'no-repeat';
+    btn.style.backgroundPosition = 'center';
+    btn.onclick = () => addSticker(src);
+    container.appendChild(btn);
+  });
 }
-window.stickerButtonHandler = stickerButtonHandler;
+
+// --- Update recent stickers when adding a sticker ---
+const oldAddSticker = addSticker;
+addSticker = function(src) {
+  oldAddSticker(src);
+
+  // update recent stickers
+  recentStickers = recentStickers.filter(s => s !== src);
+  recentStickers.unshift(src);
+  if (recentStickers.length > 8) recentStickers.pop();
+  renderRecentStickers();
+};
+
+// --- Search stickers ---
+const searchInput = document.getElementById('sticker-search');
+const searchResults = document.getElementById('search-results');
+
+searchInput.addEventListener('input', () => {
+  const query = searchInput.value.toLowerCase();
+  searchResults.innerHTML = '';
+  stickers
+    .filter(st => st.name.toLowerCase().includes(query))
+    .forEach(st => {
+      const btn = document.createElement('button');
+      btn.style.width = '50px';
+      btn.style.height = '50px';
+      btn.style.backgroundImage = `url(${st.src})`;
+      btn.style.backgroundSize = 'contain';
+      btn.style.backgroundRepeat = 'no-repeat';
+      btn.style.backgroundPosition = 'center';
+      btn.title = st.name;
+      btn.onclick = () => addSticker(st.src);
+      searchResults.appendChild(btn);
+    });
+});
 
 // --- Undo/redo stacks ---
 let undoStack = [];
