@@ -17,7 +17,7 @@ document.getElementById('uploader').addEventListener('change', function(e) {
         canvas.height / img.height
       );
       img.scale(scale);
-      img.set({ left: 0, top: 0, selectable: true });
+      img.set({ left: 0, top: 0, selectable: true, isSticker: false });
       canvas.add(img);
       canvas.sendToBack(img);
       canvas.setActiveObject(img);
@@ -55,6 +55,7 @@ function addSticker(src) {
       hasControls: true,
       hasBorders: true,
       selectable: true,
+      isSticker: true,
       stickerSrc: src // <--- custom tag!
     });
     img.scaleToWidth(100);
@@ -76,6 +77,15 @@ function removeSticker(src) {
 }
 window.removeSticker = removeSticker;
 
+// Stacking
+function restackStickers() {
+  canvas.getObjects().forEach(obj => {
+    if (obj.isSticker) {
+      canvas.bringToFront(obj);
+    }
+  });
+}
+
 // Undo/redo stacks
 let undoStack = [];
 let redoStack = [];
@@ -89,9 +99,9 @@ function saveState() {
   if (undoStack.length > maxHistory) undoStack.shift();
 }
 
-canvas.on('object:added', saveState);
-canvas.on('object:modified', saveState);
-canvas.on('object:removed', saveState);
+canvas.on('object:added', restackStickers, saveState);
+canvas.on('object:modified', restackStickers, saveState);
+canvas.on('object:removed', restackStickers, saveState);
 
 function undo() {
   if (undoStack.length > 1) {
