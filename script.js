@@ -48,6 +48,15 @@ function addSticker(src) {
 }
 window.addSticker = addSticker;
 
+function removeSticker(src) {
+  // Find all objects on the canvas that are images and match the src
+  const toRemove = canvas.getObjects('image').filter(img => img.getSrc && img.getSrc().includes(src));
+  toRemove.forEach(obj => canvas.remove(obj));
+  canvas.renderAll();
+  console.log("Removed stickers for", src);
+}
+window.removeSticker = removeSticker;
+
 // download final image
 function downloadImage() {
   const dataURL = canvas.toDataURL({ format: 'png' });
