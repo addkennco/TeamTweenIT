@@ -104,13 +104,6 @@ function saveState() {
 canvas.on('object:added',   function() { setTimeout(() => { restackStickers(); saveState(); }, 0); });
 canvas.on('object:modified',function() { setTimeout(() => { restackStickers(); saveState(); }, 0); });
 canvas.on('object:removed', function() { setTimeout(() => { restackStickers(); saveState(); }, 0); });
-canvas.on('selection:created', function() { setTimeout(restackStickers, 0); });
-canvas.on('selection:updated', function() { setTimeout(restackStickers, 0); });
-canvas.on('selection:cleared', function() { setTimeout(restackStickers, 0); });
-
-// --- Always restack stickers after selection, but use setTimeout! ---
-canvas.on('selection:created', function() { setTimeout(restackStickers, 0); });
-canvas.on('selection:updated', function() { setTimeout(restackStickers, 0); });
 
 // --- Undo/redo functions, restack after restoring ---
 function undo() {
