@@ -1,6 +1,9 @@
 const canvas = new fabric.Canvas('c');
 
-// upload background image as an object
+// Optionally set a background color to verify rendering
+canvas.setBackgroundColor('red', canvas.renderAll.bind(canvas));
+
+// upload image as a regular object
 document.getElementById('uploader').addEventListener('change', function(e) {
   const file = e.target.files[0];
   if (!file) return;
@@ -8,7 +11,7 @@ document.getElementById('uploader').addEventListener('change', function(e) {
 
   reader.onload = function(f) {
     fabric.Image.fromURL(f.target.result, function(img) {
-      // Scale to fit canvas
+      // Scale proportionally to fit canvas
       let scale = Math.min(
         canvas.width / img.width,
         canvas.height / img.height
@@ -19,6 +22,7 @@ document.getElementById('uploader').addEventListener('change', function(e) {
       canvas.setActiveObject(img);
       canvas.renderAll();
       console.log("Image added as object!", img);
+      console.log("Canvas objects:", canvas.getObjects());
     }, { crossOrigin: 'anonymous' });
   };
 
