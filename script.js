@@ -74,49 +74,47 @@ function removeSticker(src) {
 }
 window.removeSticker = removeSticker;
 
-// Undo/redo stacks
+// undo and redo
 let undoStack = [];
 let redoStack = [];
-const maxHistory = 25; // Limit history for memory
+const maxHistory = 25;
+let isRestoring = false;
 
-// Save state to undo stack (call this after any change)
 function saveState() {
-  // Clear redo stack on new action
+  if (isRestoring) return;
   redoStack = [];
-  // Push current state
   undoStack.push(canvas.toDatalessJSON());
   if (undoStack.length > maxHistory) undoStack.shift();
 }
 
-// Call saveState after every add/remove/move/scale/rotate
 canvas.on('object:added', saveState);
 canvas.on('object:modified', saveState);
 canvas.on('object:removed', saveState);
 
-// Undo function
 function undo() {
   if (undoStack.length > 1) {
-    // Move current state to redo stack
+    isRestoring = true;
     redoStack.push(undoStack.pop());
     canvas.loadFromJSON(undoStack[undoStack.length - 1], () => {
       canvas.renderAll();
+      isRestoring = false;
     });
   }
 }
 
-// Redo function
 function redo() {
   if (redoStack.length > 0) {
+    isRestoring = true;
     const state = redoStack.pop();
     undoStack.push(state);
     canvas.loadFromJSON(state, () => {
       canvas.renderAll();
+      isRestoring = false;
     });
   }
 }
 
-// On initial load, save the empty canvas state
-saveState();
+saveState(); // on initial load
 
 // download final image
 function downloadImage() {
