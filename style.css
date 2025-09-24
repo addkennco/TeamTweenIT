@@ -1,5 +1,5 @@
 body {
-  font-family: comfortaa;
+  font-family: comfortaa, arial rounded, arial;
   text-align: center;
   padding: 20px;
   background: #fafafa;
@@ -14,7 +14,7 @@ button {
   padding: 10px 15px;
   border: none;
   border-radius: 8px;
-  background: ##c9f4ff;
+  background: #c9f4ff;
   color: white;
   cursor: pointer;
 }
