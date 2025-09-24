@@ -53,9 +53,9 @@ body {
 
 #icon-buttons {
   display: flex;
-  gap: 10px;       /* space between icons */
+  gap: 20px;       /* space between icons */
   justify-content: center;
-  margin: 10px 0;
+  margin: 20px 0;
 }
 
 .icon-button {
