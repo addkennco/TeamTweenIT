@@ -1,5 +1,5 @@
 body {
-  font-family: comfortaa, arial;
+  font-family: Bebas Neue;
   text-align: center;
   padding: 20px;
   background: #fafafa;
@@ -7,7 +7,7 @@ body {
 
 /* Sticker search container */
 #sticker-search-container {
-  max-width: 600px;
+  max-width: 500px;
   height: 250px;
   display: flex;
   flex-direction: column; /* stack search + results */
@@ -41,7 +41,7 @@ body {
 }
 /* Recently used stickers container */
 #recent-stickers-container {
-  max-width: 600px; 
+  max-width: 500px; 
   height: 150px;     
   overflow-x: auto; /* horizontal scroll */
   display: flex;
