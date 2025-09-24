@@ -3,14 +3,23 @@ canvas.setBackgroundColor('lightgrey', canvas.renderAll.bind(canvas));
 
 // --- Helper to restack stickers above everything else ---
 function restackStickers() {
-  // Put all non-sticker images at the back
-  canvas.getObjects().forEach(obj => {
-    if (!obj.isSticker) canvas.sendToBack(obj);
+   // Get all objects
+  const objs = canvas.getObjects();
+
+  // Move all uploads (not stickers) to the back
+  objs.forEach(obj => {
+    if (!obj.isSticker) { // Make sure you set this property when adding!
+      canvas.sendToBack(obj);
+    }
   });
-  // Bring all stickers to the front
-  canvas.getObjects().forEach(obj => {
-    if (obj.isSticker) canvas.bringToFront(obj);
+
+  // Move all stickers to the front
+  objs.forEach(obj => {
+    if (obj.isSticker) {
+      canvas.bringToFront(obj);
+    }
   });
+
   canvas.renderAll();
 }
 
