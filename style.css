@@ -13,18 +13,18 @@ body {
   flex-direction: column; /* stack search + results */
   gap: 4px;
   padding: 4px;
-  border: 1px solid #ccc;
+  border: 2px solid #4cd3aa;
   border-radius: 6px;  
   box-sizing: border-box;
 }
 
-/* Input with magnifying glass */
+/* Search input */
 #sticker-search {
   width: 200px;
   height: 36px; /* consistent height */
   padding: 6px 8px 6px 36px; /* left padding for icon */
   font-size: 14px;
-  border: 1px solid #ccc;
+  border: 2px solid #4cd3aa;
   border-radius: 6px;
   background: url('icons/magnifying-glass.png') no-repeat 10px center;
   background-size: 20px 20px;
@@ -49,7 +49,7 @@ body {
   flex-wrap: nowrap;
   gap: 8px;
   padding: 4px;
-  border: 1px solid #ccc;
+  border: 2px solid #4cd3aa;
   border-radius: 6px;  
   box-sizing: border-box;
 }
@@ -78,15 +78,16 @@ body {
 
 .font-selector {
   font-size: 14px;
-  padding: 12px 16px;    
-  border-radius: 6px;  
+  padding: 12px 16px;
+  border: 2px solid #4cd3aa;
+  border-radius: 6px;
 }
 
 input[type="color"] {
   width: 40px;
   height: 20px;
   padding: 0;
-  border: 1px solid #ccc;
+  border: 2px solid #4cd3aa;
   border-radius: 2px;
   cursor: pointer;
 }
