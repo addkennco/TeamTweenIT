@@ -86,7 +86,7 @@ uploader.addEventListener('change', function(e) {
         isSticker: false
       });
 
-      // --- Img Delete control ---
+      // --- Img Delete Control ---
       img.controls.tr = new fabric.Control({
         x: 0.5,
         y: -0.5,
@@ -119,7 +119,7 @@ uploader.addEventListener('change', function(e) {
   reader.readAsDataURL(file);
 });
 
-  // --- Add sticker ---
+  // --- Add Sticker ---
 function addSticker(src) {
   fabric.Image.fromURL(src, function(img) {
     img.set({
@@ -162,7 +162,7 @@ function addSticker(src) {
 }
 window.addSticker = addSticker;
 
-  // --- Sticker metadata ---
+  // --- Sticker Metadata ---
   const stickers = [
     { name: 'TweenIT Logo 1', src: 'icons/TweenitLogo1.png' },
     { name: 'TweenIT Logo 2', src: 'icons/TweenitLogo2.png' },
@@ -178,7 +178,8 @@ window.addSticker = addSticker;
     { name: 'Red Stars', src: 'icons/StarsRed.png' },
     { name: 'Multicolor Stars', src: 'icons/StarsMulti.png' },
     { name: 'Speech Bubble', src: 'icons/Hey.png' },
-   // Kids' tags { name: 'John Discount Tag 1', src: 'icons/John_Blue.png' }, 
+   // Kids' tags 
+    { name: 'John Discount Tag 1', src: 'icons/John_Blue.png' }, 
     { name: 'John Discount Tag 2', src: 'icons/John_Pink.png' }, 
     { name: 'John Discount Tag 3', src: 'icons/John_Yellow.png' }, 
     { name: 'John Discount Tag 4', src: 'icons/John_Green.png' }, 
@@ -215,7 +216,7 @@ window.addSticker = addSticker;
     { name: 'Naoki Discount Tag 3', src: 'icons/Naoki_Yellow.png' }, 
     { name: 'Naoki Discount Tag 4', src: 'icons/Naoki_Green.png' }, ];
 
-  // --- Recently used stickers ---
+  // --- Recently Used Stickers ---
   let recentStickers = [];
   function renderRecentStickers() {
     const container = document.getElementById('recent-stickers');
@@ -237,14 +238,14 @@ window.addSticker = addSticker;
   addSticker = function(src) {
     oldAddSticker(src);
 
-    // --- Update recent stickers ---
+    // --- Update Recent Stickers ---
     recentStickers = recentStickers.filter(s => s !== src);
     recentStickers.unshift(src);
     if (recentStickers.length > 8) recentStickers.pop();
     renderRecentStickers();
   };
 
-  // --- Search stickers ---
+  // --- Search Stickers ---
   const searchInput = document.getElementById('sticker-search');
   const searchResults = document.getElementById('search-results');
 
@@ -267,7 +268,7 @@ window.addSticker = addSticker;
       });
   });
 
-// --- Clear canvas ---
+// --- Clear Canvas ---
 window.clearCanvas = function() {
   if (confirm("Are you sure you want to clear the canvas?")) {
     canvas.clear();
@@ -277,7 +278,7 @@ window.clearCanvas = function() {
   }
 };
 
-// --- Help popup ---
+// --- Help Popup ---
 window.showHelp = function() {
   const helpText = `
   Welcome to the Team TweenIT Postmaker! 🎨
@@ -294,7 +295,7 @@ window.showHelp = function() {
   alert(helpText);
 };
 
-  // --- Text editor ---
+  // --- Text Editor ---
   window.addText = function() {
   const text = new fabric.Textbox('Your text here', {
     left: 100,
@@ -307,7 +308,7 @@ window.showHelp = function() {
     hasBorders: true,
   });
 
-  // --- Text delete control ---
+  // --- Text Delete Control ---
   text.controls.tr = new fabric.Control({
     x: 0.5,
     y: -0.5,
@@ -336,7 +337,7 @@ window.showHelp = function() {
   saveState();
 };
 
-  // --- Font selector ---
+  // --- Font Selector ---
 document.getElementById('font-selector').addEventListener('change', e => {
   const obj = canvas.getActiveObject();
   if (obj && obj.type === 'textbox') {
@@ -345,7 +346,7 @@ document.getElementById('font-selector').addEventListener('change', e => {
   }
 });
 
-  // --- Color picker ---
+  // --- Color Picker ---
   document.getElementById('text-color-picker').addEventListener('input', function() {
   const active = canvas.getActiveObject();
   if (active && active.type === 'textbox') {
@@ -355,7 +356,7 @@ document.getElementById('font-selector').addEventListener('change', e => {
   }
 });
 
-  // --- Font size ---
+  // --- Font Size ---
   const sizeInput = document.getElementById('font-size');
 const sizeDisplay = document.getElementById('font-size-display');
 
@@ -370,7 +371,7 @@ sizeInput.addEventListener('input', () => {
   }
 });
   
-  // --- Undo/redo stacks ---
+  // --- Undo/Redo Stacks ---
   let undoStack = [];
   let redoStack = [];
   const maxHistory = 25;
