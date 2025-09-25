@@ -102,7 +102,7 @@ uploader.addEventListener('change', function(e) {
         ctx.save();
         ctx.translate(left, top);
         ctx.rotate(angle);
-        ctx.fillStyle = 'white';
+        ctx.fillStyle = 'transparent';
         ctx.strokeStyle = 'black';
         ctx.lineWidth = 1;
         ctx.fillRect(-size/2, -size/2, size, size);
@@ -157,7 +157,7 @@ function addSticker(src) {
         ctx.save();
         ctx.translate(left, top);
         ctx.rotate(angle);
-        ctx.fillStyle = 'white';
+        ctx.fillStyle = 'transparent';
         ctx.strokeStyle = 'black';
         ctx.lineWidth = 1;
         ctx.fillRect(-size/2, -size/2, size, size);
@@ -340,7 +340,7 @@ window.showHelp = function() {
         ctx.save();
         ctx.translate(left, top);
         ctx.rotate(angle);
-        ctx.fillStyle = 'white';
+        ctx.fillStyle = 'transparent';
         ctx.strokeStyle = 'black';
         ctx.lineWidth = 1;
         ctx.fillRect(-size/2, -size/2, size, size);
