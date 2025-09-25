@@ -104,6 +104,7 @@ uploader.addEventListener('change', function(e) {
           ctx.fillStyle = 'black';
           ctx.strokeStyle = 'black';
           ctx.lineWidth = 1;
+          ctx.strokeRect(-size/2, -size/2, size, size);
           ctx.font = 'bold 16px sans-serif';
           ctx.textAlign = 'center';
           ctx.textBaseline = 'middle';
@@ -155,6 +156,7 @@ function addSticker(src) {
         ctx.fillStyle = 'black';
         ctx.strokeStyle = 'black';
         ctx.lineWidth = 1;
+        ctx.strokeRect(-size/2, -size/2, size, size);
         ctx.font = 'bold 16px sans-serif';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
@@ -334,6 +336,7 @@ window.showHelp = function() {
       ctx.fillStyle = 'black';
       ctx.strokeStyle = 'black';
       ctx.lineWidth = 1;
+      ctx.strokeRect(-size/2, -size/2, size, size);
       ctx.font = 'bold 16px sans-serif';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
