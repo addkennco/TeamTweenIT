@@ -97,12 +97,16 @@ uploader.addEventListener('change', function(e) {
           saveState();
         },
         render: function(ctx, left, top, styleOverride, fabricObject) {
-          fabric.Control.prototype.render.call(this, ctx, left, top, styleOverride, fabricObject);
+         const angle = fabric.util.degreesToRadians(fabricObject.angle); 
+          ctx.save(); 
+          ctx.translate(left, top); 
+          ctx.rotate(angle);
           ctx.fillStyle = 'black';
           ctx.font = 'bold 12px sans-serif';
           ctx.textAlign = 'center';
           ctx.textBaseline = 'middle';
-          ctx.fillText('×', left, top);
+          ctx.fillText('×', 0, 0); // draw at rotated origin 
+          ctx.restore();
         }
       });
 
@@ -142,12 +146,16 @@ function addSticker(src) {
         saveState();
       },
       render: function(ctx, left, top, styleOverride, fabricObject) {
-        fabric.Control.prototype.render.call(this, ctx, left, top, styleOverride, fabricObject);
+        const angle = fabric.util.degreesToRadians(fabricObject.angle); 
+        ctx.save(); 
+        ctx.translate(left, top); 
+        ctx.rotate(angle);
         ctx.fillStyle = 'black';
         ctx.font = 'bold 12px sans-serif';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
-        ctx.fillText('×', left, top);
+        ctx.fillText('×', 0, 0); // draw at rotated origin 
+        ctx.restore();
       }
     });
 
@@ -315,12 +323,16 @@ window.showHelp = function() {
       saveState();
     },
     render: function(ctx, left, top, styleOverride, fabricObject) {
-      fabric.Control.prototype.render.call(this, ctx, left, top, styleOverride, fabricObject);
+      const angle = fabric.util.degreesToRadians(fabricObject.angle); 
+      ctx.save(); 
+      ctx.translate(left, top); 
+      ctx.rotate(angle);
       ctx.fillStyle = 'black';
       ctx.font = 'bold 12px sans-serif';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
-      ctx.fillText('×', left, top);
+      ctx.fillText('×', 0, 0); // draw at rotated origin 
+      ctx.restore();
     }
   });
 
