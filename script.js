@@ -6,8 +6,8 @@ document.addEventListener('DOMContentLoaded', () => {
   
 // --- Canvas Pattern ---
 const patternCanvas = document.createElement('canvas');
-patternCanvas.width = 40;
-patternCanvas.height = 40;
+patternCanvas.width = 20;
+patternCanvas.height = 20;
 const ctx = patternCanvas.getContext('2d');
 
 // --- Colors ---
@@ -16,11 +16,11 @@ const dark = '#ccc';
 
 // --- Checkerboard ---
 ctx.fillStyle = light;
-ctx.fillRect(0, 0, 40, 40);
+ctx.fillRect(0, 0, 20, 20);
 
 ctx.fillStyle = dark;
-ctx.fillRect(0, 0, 20, 20);    // top-left
-ctx.fillRect(20, 20, 20, 20);  // bottom-right
+ctx.fillRect(0, 0, 10, 10);    // top-left
+ctx.fillRect(10, 10, 10, 10);  // bottom-right
 
 // --- Create Pattern ---
 const pattern = new fabric.Pattern({
