@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
     transparentCorners: true
   });
 
-  // --- DRY Delete Control ---
+  // --- Delete Control ---
   function createDeleteControl() {
     return new fabric.Control({
       x: 0.5,
