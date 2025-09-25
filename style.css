@@ -33,7 +33,7 @@ body {
 
 /* Search Results Container */
 #search-results {
- display: flex;
+  display: flex;
   gap: 4px;
   flex-wrap: wrap;
   overflow-x: hidden;
