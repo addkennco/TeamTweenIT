@@ -32,6 +32,7 @@
   <img src="icons/text.png" alt="Add Text" onclick="addText()" class="icon-button">
   <img src="icons/eraser.png" alt="Clear Canvas" onclick="clearCanvas()" class="icon-button">
   <img src="icons/question.png" alt="Help" onclick="showHelp()" class="icon-button">
+  <img id="download" src="icons/download.png" alt="Download" onclick="download()" class="icon-button">
 </div
     <!-- Text Editing Station -->
 <div id="text-editor">
@@ -59,26 +60,22 @@
   <!-- Canvas -->
   <canvas id="c" width="500" height="500"></canvas>
 <br>
+    
     <!-- Search stickers -->
 <div id="sticker-search-container">
   <input type="text" id="sticker-search" placeholder="Type to search...">
   <div id="search-results"></div>
 </div>
+    
  <!-- Recently used stickers -->
     <div id="recently-used-text">  
     <h3>⭐Recently Used</h3>
 </div>
+    
 <div id="recent-stickers-container">
   <div id="recent-stickers" style="display:flex; gap:8px; flex-wrap: wrap;"></div>
 </div>
 <br>
-  <!-- Download -->
-  <img 
-  id="download" 
-  src="icons/download.png" 
-  alt="Download" 
-  onclick="download()" 
-  class="icon-button">
 </center>
 
 <script>
