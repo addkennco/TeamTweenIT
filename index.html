@@ -19,14 +19,9 @@
 </head>
 <body>
   <center>
-  <img src="icons/TweenITAppTitle.png" width="450">
-  <br>
-
   <!-- Navigation -->
 <div id="icon-buttons">
-  <!-- Hidden file input -->
-<input type="file" id="uploader" accept="image/*" style="display:none;">
-<!-- Custom upload button -->
+  <input type="file" id="uploader" accept="image/*" style="display:none;">
   <img src="icons/upload.png" alt="Upload Image" id="upload-button" class="icon-button">
   <img src="icons/undo.png" alt="Undo" onclick="undo()" class="icon-button">
   <img src="icons/redo.png" alt="Redo" onclick="redo()" class="icon-button">
@@ -34,11 +29,10 @@
   <img src="icons/eraser.png" alt="Clear Canvas" onclick="clearCanvas()" class="icon-button">
   <img src="icons/question.png" alt="Help" onclick="showHelp()" class="icon-button">
   <img id="download" src="icons/download.png" alt="Download" onclick="download()" class="icon-button">
-  <br>
+</div>
   <!-- Filename label -->
 <div id="uploaded-filename" style="margin-top:4px; font-size:14px; color:#333;"></div>
-</div
-    <!-- Text Editing Station -->
+  <!-- Text Editing Station -->
 <div id="text-editor">
  <select id="font-selector" class="font-preview">
   <option value="" disabled selected hidden>Font Style</option>
@@ -50,15 +44,7 @@
 </select>
     <input type="color" id="text-color-picker" value="#000000">
     <label for="font-size">Size:</label>
-<input
-  id="font-size"
-  type="range"
-  min="12"
-  max="120"
-  value="25"
-  step="2"
-  style="width:100px;"
->
+<input id="font-size" type="range" min="12" max="120" value="25" step="2" style="width:100px;">
 <span id="font-size-display">25</span>px
   </div>
     
