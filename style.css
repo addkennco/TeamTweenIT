@@ -55,11 +55,6 @@ body {
   box-sizing: border-box;
 }
 
-/* Recently Used Text Container */
-#recently-used-text (
-  max-width: 500px; 
-}
-
 /* Button Display */
 #icon-buttons {
   display: flex;
