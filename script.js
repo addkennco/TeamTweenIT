@@ -3,11 +3,34 @@ document.addEventListener('DOMContentLoaded', () => {
   const canvas = new fabric.Canvas('c', {
     preserveObjectStacking: true
   });
-  canvas.setBackgroundColor('white', canvas.renderAll.bind(canvas));
- const canvasElement = document.getElementById('c');
-    canvasElement.style.border = '1px solid #4cd3aa';
   
-  // --- Make all object borders and corners black ---
+// --- Canvas Pattern ---
+const patternCanvas = document.createElement('canvas');
+patternCanvas.width = 40;
+patternCanvas.height = 40;
+const ctx = patternCanvas.getContext('2d');
+
+// --- Colors ---
+const light = '#fff';
+const dark = '#ccc';
+
+// --- Checkerboard ---
+ctx.fillStyle = light;
+ctx.fillRect(0, 0, 40, 40);
+
+ctx.fillStyle = dark;
+ctx.fillRect(0, 0, 20, 20);    // top-left
+ctx.fillRect(20, 20, 20, 20);  // bottom-right
+
+// --- Create Pattern ---
+const pattern = new fabric.Pattern({
+  source: patternCanvas,
+  repeat: 'repeat'
+});
+  
+canvas.setBackgroundColor(pattern, canvas.renderAll.bind(canvas));
+
+  // --- Resize Tools ---
 fabric.Object.prototype.set({
   borderColor: 'black',
   cornerStrokeColor: 'black',
@@ -15,7 +38,7 @@ fabric.Object.prototype.set({
   transparentCorners: true
 });
 
-  // --- Helper to restack stickers above everything else ---
+  // --- Sticker Stacker ---
   function restackStickers() {
   canvas.getObjects().forEach(obj => {
     if (obj.isSticker) {
@@ -31,12 +54,12 @@ fabric.Object.prototype.set({
     };
   })(fabric.Object.prototype.toObject);
 
-  // --- Upload image ---
+  // --- Upload Image ---
 const uploader = document.getElementById('uploader');
 const uploadButton = document.getElementById('upload-button');
 const filenameLabel = document.getElementById('uploaded-filename');
 
-// Open file picker when clicking the icon
+// --- Event Listener ---
 uploadButton.addEventListener('click', () => {
   uploader.click();
 });
@@ -45,7 +68,7 @@ uploader.addEventListener('change', function(e) {
   const file = e.target.files[0];
   if (!file) return;
 
-  // Show filename nicely
+  // --- Filename Display ---
   filenameLabel.textContent = file.name;
 
   const reader = new FileReader();
@@ -63,39 +86,7 @@ uploader.addEventListener('change', function(e) {
         isSticker: false
       });
 
-      // Delete control (top-right)
-      img.controls.tr = new fabric.Control({
-        x: 0.5,
-        y: -0.5,
-        offsetX: 16,
-        offsetY: -16,
-        cursorStyle: 'pointer',
-        mouseUpHandler: function(eventData, transform) {
-          canvas.remove(transform.target);
-          canvas.renderAll();
-          saveState();
-        },
-        render: function(ctx, left, top, styleOverride, fabricObject) {
-          fabric.Control.prototype.render.call(this, ctx, left, top, styleOverride, fabricObject);
-          ctx.fillStyle = 'black';
-          ctx.font = 'bold 12px sans-serif';
-          ctx.textAlign = 'center';
-          ctx.textBaseline = 'middle';
-          ctx.fillText('×', left, top);
-        }
-      });
-
-      canvas.add(img);
-      canvas.setActiveObject(img);
-      restackStickers();
-    }, { crossOrigin: 'anonymous' });
-
-    e.target.value = ''; // Clear file input
-  };
-
-  reader.readAsDataURL(file);
-});
-      // --- Delete control (top-right) ---
+      // --- Img Delete control ---
       img.controls.tr = new fabric.Control({
         x: 0.5,
         y: -0.5,
@@ -142,7 +133,7 @@ function addSticker(src) {
     });
     img.scaleToWidth(100);
 
-    // --- Delete control (top-right) ---
+    // --- Sticker delete control ---
     img.controls.tr = new fabric.Control({
       x: 0.5,
       y: -0.5,
@@ -160,7 +151,7 @@ function addSticker(src) {
         ctx.font = 'bold 12px sans-serif';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
-        ctx.fillText('\u2717', left, top);
+        ctx.fillText('×', left, top);
       }
     });
 
@@ -246,7 +237,7 @@ window.addSticker = addSticker;
   addSticker = function(src) {
     oldAddSticker(src);
 
-    // update recent stickers
+    // --- Update recent stickers ---
     recentStickers = recentStickers.filter(s => s !== src);
     recentStickers.unshift(src);
     if (recentStickers.length > 8) recentStickers.pop();
@@ -276,7 +267,7 @@ window.addSticker = addSticker;
       });
   });
 
-// Clear the canvas completely
+// --- Clear canvas ---
 window.clearCanvas = function() {
   if (confirm("Are you sure you want to clear the canvas?")) {
     canvas.clear();
@@ -286,7 +277,7 @@ window.clearCanvas = function() {
   }
 };
 
-// Help Popup
+// --- Help popup ---
 window.showHelp = function() {
   const helpText = `
   Welcome to the Team TweenIT Postmaker! 🎨
@@ -303,7 +294,7 @@ window.showHelp = function() {
   alert(helpText);
 };
 
-  // --- Text Editor ---
+  // --- Text editor ---
   window.addText = function() {
   const text = new fabric.Textbox('Your text here', {
     left: 100,
@@ -316,7 +307,7 @@ window.showHelp = function() {
     hasBorders: true,
   });
 
-  // Add delete control (top-right)
+  // --- Text delete control ---
   text.controls.tr = new fabric.Control({
     x: 0.5,
     y: -0.5,
@@ -345,7 +336,7 @@ window.showHelp = function() {
   saveState();
 };
 
-  // --- Font Selector ---
+  // --- Font selector ---
 document.getElementById('font-selector').addEventListener('change', e => {
   const obj = canvas.getActiveObject();
   if (obj && obj.type === 'textbox') {
@@ -354,7 +345,7 @@ document.getElementById('font-selector').addEventListener('change', e => {
   }
 });
 
-  // --- Color Picker ---
+  // --- Color picker ---
   document.getElementById('text-color-picker').addEventListener('input', function() {
   const active = canvas.getActiveObject();
   if (active && active.type === 'textbox') {
@@ -364,7 +355,7 @@ document.getElementById('font-selector').addEventListener('change', e => {
   }
 });
 
-  // --- Font Size ---
+  // --- Font size ---
   const sizeInput = document.getElementById('font-size');
 const sizeDisplay = document.getElementById('font-size-display');
 
