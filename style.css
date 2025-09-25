@@ -36,9 +36,8 @@ body {
   display: flex;
   gap: 4px;
   flex-wrap: wrap;
-  overflow-y: auto;
-  flex-grow: 1;
-  height: 70px;  
+  overflow-x: auto;
+  height: 72px; 
 }
 
 /* Recently used stickers container */
