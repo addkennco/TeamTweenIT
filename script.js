@@ -441,16 +441,26 @@ sizeInput.addEventListener('input', () => {
 
   // --- Download ---
   function download() {
-    canvas.discardActiveObject();
-    canvas.renderAll();
-    const dataURL = canvas.toDataURL({ format: 'png', quality: 1 });
-    const a = document.createElement('a');
-    a.href = dataURL.replace('image/png', 'image/octet-stream');
-    a.download = 'final.png';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-  }
-  window.download = download;
+  canvas.discardActiveObject();
+  canvas.renderAll();
+
+  // --- Save Current Background
+  const oldBg = canvas.backgroundColor;
+
+  // --- Set Background Transparent ---
+  canvas.setBackgroundColor('transparent', canvas.renderAll.bind(canvas));
+
+  // --- Export ---
+  const dataURL = canvas.toDataURL({ format: 'png', quality: 1 });
+  const a = document.createElement('a');
+  a.href = dataURL.replace('image/png', 'image/octet-stream');
+  a.download = 'final.png';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+
+  // --- Restore Checkerboard ---
+  canvas.setBackgroundColor(oldBg, canvas.renderAll.bind(canvas));
+}
 
 }); // end DOMContentLoaded
