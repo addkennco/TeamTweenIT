@@ -90,8 +90,6 @@ uploader.addEventListener('change', function(e) {
       img.controls.tr = new fabric.Control({
         x: 0.5,
         y: -0.5,
-        offsetX: 2,
-        offsetY: -2,
         cursorStyle: 'pointer',
         mouseUpHandler: function(eventData, transform) {
           canvas.remove(transform.target);
@@ -137,8 +135,6 @@ function addSticker(src) {
     img.controls.tr = new fabric.Control({
       x: 0.5,
       y: -0.5,
-      offsetX: 2,
-      offsetY: -2,
       cursorStyle: 'pointer',
       mouseUpHandler: function(eventData, transform) {
         canvas.remove(transform.target);
@@ -312,8 +308,6 @@ window.showHelp = function() {
   text.controls.tr = new fabric.Control({
     x: 0.5,
     y: -0.5,
-    offsetX: 2,
-    offsetY: -2,
     cursorStyle: 'pointer',
     mouseUpHandler: function(eventData, transform) {
       canvas.remove(transform.target);
