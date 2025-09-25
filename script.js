@@ -208,14 +208,14 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- Help Popup ---
   window.showHelp = function() {
     alert(`
-Welcome to the Team TweenIT Postmaker! 🎨
+Welcome to the Team TweenIT Postmaker!
 
-- Use the Undo / Redo icons to fix mistakes.
-- Upload images to add your own designs.
-- Search and add stickers using the search bar.
-- Recently used stickers appear in the "Recently Used" section.
-- Download your final image with the download icon.
-- Clear the canvas with the eraser icon if you want to start fresh.
+Upload Images: Bring your own creations to life! Move, scale, rotate, or delete them anytime.
+Add Stickers: Search or pick from your recently used stickers. Drag, resize, rotate, and tap × to remove.
+Add Text: Pop in your words, pick a font, size, and color, and watch it shine! Tap × to delete.
+Undo / Redo: Made a mistake? Fix it fast with Undo and Redo.
+Eraser: Start fresh with the eraser button. 
+Ready to save? Hit the download icon and grab your PNG.
 
 Have fun creating!
     `);
