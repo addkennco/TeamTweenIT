@@ -22,17 +22,21 @@
   <img src="icons/TweenITAppTitle.png" width="450">
   <br>
 
-  <!-- Upload image -->
-  <input type="file" id="uploader" accept="image/*">
-  <br><br>
-  <!-- Undo, Redo, Download, Clear, Help icons -->
+  <!-- Navigation -->
 <div id="icon-buttons">
+  <!-- Hidden file input -->
+<input type="file" id="uploader" accept="image/*" style="display:none;">
+<!-- Custom upload button -->
+  <img src="icons/upload.png" alt="Upload Image" id="upload-button" class="icon-button">
   <img src="icons/undo.png" alt="Undo" onclick="undo()" class="icon-button">
   <img src="icons/redo.png" alt="Redo" onclick="redo()" class="icon-button">
   <img src="icons/text.png" alt="Add Text" onclick="addText()" class="icon-button">
   <img src="icons/eraser.png" alt="Clear Canvas" onclick="clearCanvas()" class="icon-button">
   <img src="icons/question.png" alt="Help" onclick="showHelp()" class="icon-button">
   <img id="download" src="icons/download.png" alt="Download" onclick="download()" class="icon-button">
+  <br>
+  <!-- Filename label -->
+<div id="uploaded-filename" style="margin-top:4px; font-size:14px; color:#333;"></div>
 </div
     <!-- Text Editing Station -->
 <div id="text-editor">
