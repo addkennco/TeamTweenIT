@@ -37,14 +37,15 @@ body {
   gap: 4px;
   flex-wrap: wrap;
   overflow-y: auto;
-  flex-grow: 1; /* fills remaining height */
+  flex-grow: 1;
+  height: 70px;  
 }
 
 /* Recently used stickers container */
 #recent-stickers-container {
   max-width: 500px; 
-  height: 150px;     
-  overflow-x: auto; /* horizontal scroll */
+  height: 50px;     
+  overflow-x: auto;
   display: flex;
   flex-wrap: nowrap;
   gap: 8px;
