@@ -42,6 +42,11 @@ body {
   padding: 4px; 
 }
 
+/* Recently Used Text Container */
+#recently-used-text
+  max-width: 500px; 
+}
+
 /* Recently Used Stickers Container */
 #recent-stickers-container {
   max-width: 500px; 
