@@ -11,8 +11,8 @@ body {
   height: 250px;
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  padding: 4px;
+  gap: 2px;
+  padding: 2px;
   border: 2px solid #4cd3aa;
   border-radius: 6px;  
   box-sizing: border-box;
