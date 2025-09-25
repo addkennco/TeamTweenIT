@@ -87,6 +87,6 @@ input[type="color"] {
   height: 20px;
   padding: 0;
   border: 1px solid #ccc;
-  border-radius: 6px;
+  border-radius: 2px;
   cursor: pointer;
 }
