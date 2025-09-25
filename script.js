@@ -102,7 +102,9 @@ uploader.addEventListener('change', function(e) {
           ctx.translate(left, top); 
           ctx.rotate(angle);
           ctx.fillStyle = 'black';
-          ctx.font = 'bold 12px sans-serif';
+          ctx.strokeStyle = 'black';
+          ctx.lineWidth = 1;
+          ctx.font = 'bold 16px sans-serif';
           ctx.textAlign = 'center';
           ctx.textBaseline = 'middle';
           ctx.fillText('×', 0, 0); // draw at rotated origin 
@@ -151,7 +153,9 @@ function addSticker(src) {
         ctx.translate(left, top); 
         ctx.rotate(angle);
         ctx.fillStyle = 'black';
-        ctx.font = 'bold 12px sans-serif';
+        ctx.strokeStyle = 'black';
+        ctx.lineWidth = 1;
+        ctx.font = 'bold 16px sans-serif';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         ctx.fillText('×', 0, 0); // draw at rotated origin 
@@ -328,7 +332,9 @@ window.showHelp = function() {
       ctx.translate(left, top); 
       ctx.rotate(angle);
       ctx.fillStyle = 'black';
-      ctx.font = 'bold 12px sans-serif';
+      ctx.strokeStyle = 'black';
+      ctx.lineWidth = 1;
+      ctx.font = 'bold 16px sans-serif';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       ctx.fillText('×', 0, 0); // draw at rotated origin 
