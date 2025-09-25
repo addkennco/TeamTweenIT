@@ -24,18 +24,23 @@ ctx.fillRect(10, 10, 10, 10);  // bottom-right
 
 // --- Create Pattern ---
 const pattern = new fabric.Pattern({
-  source: patternCanvas,
-  repeat: 'repeat'
+source: patternCanvas,
+repeat: 'repeat'
 });
   
 canvas.setBackgroundColor(pattern, canvas.renderAll.bind(canvas));
 
-  // --- Resize Tools ---
+const checkerboardPattern = new fabric.Pattern({
+source: patternCanvas,
+repeat: 'repeat'
+});
+  
+// --- Resize Tools ---
 fabric.Object.prototype.set({
-  borderColor: 'black',
-  cornerStrokeColor: 'black',
-  cornerSize: 12,
-  transparentCorners: true
+borderColor: 'black',
+cornerStrokeColor: 'black',
+cornerSize: 12,
+transparentCorners: true
 });
 
   // --- Sticker Stacker ---
@@ -102,10 +107,8 @@ uploader.addEventListener('change', function(e) {
         ctx.save();
         ctx.translate(left, top);
         ctx.rotate(angle);
-        ctx.fillStyle = 'transparent';
         ctx.strokeStyle = 'black';
         ctx.lineWidth = 1;
-        ctx.fillRect(-size/2, -size/2, size, size);
         ctx.strokeRect(-size/2, -size/2, size, size);
         ctx.fillStyle = 'black';
         ctx.font = 'bold 16px sans-serif';
@@ -157,10 +160,8 @@ function addSticker(src) {
         ctx.save();
         ctx.translate(left, top);
         ctx.rotate(angle);
-        ctx.fillStyle = 'transparent';
         ctx.strokeStyle = 'black';
         ctx.lineWidth = 1;
-        ctx.fillRect(-size/2, -size/2, size, size);
         ctx.strokeRect(-size/2, -size/2, size, size);
         ctx.fillStyle = 'black';
         ctx.font = 'bold 16px sans-serif';
@@ -284,16 +285,6 @@ window.addSticker = addSticker;
       });
   });
 
-// --- Clear Canvas ---
-window.clearCanvas = function() {
-  if (confirm("Are you sure you want to clear the canvas?")) {
-    canvas.clear();
-    canvas.backgroundColor = 'lightgrey';
-    canvas.renderAll();
-    saveState();
-  }
-};
-
 // --- Help Popup ---
 window.showHelp = function() {
   const helpText = `
@@ -340,10 +331,8 @@ window.showHelp = function() {
         ctx.save();
         ctx.translate(left, top);
         ctx.rotate(angle);
-        ctx.fillStyle = 'transparent';
         ctx.strokeStyle = 'black';
         ctx.lineWidth = 1;
-        ctx.fillRect(-size/2, -size/2, size, size);
         ctx.strokeRect(-size/2, -size/2, size, size);
         ctx.fillStyle = 'black';
         ctx.font = 'bold 16px sans-serif';
@@ -439,28 +428,31 @@ sizeInput.addEventListener('input', () => {
 
   saveState(); // Save initial empty canvas
 
+  // --- Clear Canvas ---
+window.clearCanvas = function() {
+  if (confirm("Are you sure you want to clear the canvas?")) {
+    canvas.clear();
+    canvas.setBackgroundColor(checkerboardPattern, canvas.renderAll.bind(canvas));
+    saveState();
+  }
+};
+
   // --- Download ---
   function download() {
-  canvas.discardActiveObject();
-  canvas.renderAll();
-
-  // --- Save Current Background
-  const oldBg = canvas.backgroundColor;
-
-  // --- Set Background Transparent ---
-  canvas.setBackgroundColor('transparent', canvas.renderAll.bind(canvas));
-
-  // --- Export ---
-  const dataURL = canvas.toDataURL({ format: 'png', quality: 1 });
-  const a = document.createElement('a');
-  a.href = dataURL.replace('image/png', 'image/octet-stream');
-  a.download = 'final.png';
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-
-  // --- Restore Checkerboard ---
-  canvas.setBackgroundColor(oldBg, canvas.renderAll.bind(canvas));
+    canvas.discardActiveObject();
+    canvas.renderAll();
+    const oldBg = canvas.backgroundColor;
+    canvas.backgroundColor = null;
+    canvas.renderAll();
+    const dataURL = canvas.toDataURL({ format: 'png', quality: 1 });
+    const a = document.createElement('a');
+    a.href = dataURL.replace('image/png', 'image/octet-stream');
+    a.download = 'final.png';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    canvas.backgroundColor = oldBg;
+    canvas.renderAll();
 }
 
 }); // end DOMContentLoaded
