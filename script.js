@@ -97,20 +97,23 @@ uploader.addEventListener('change', function(e) {
           saveState();
         },
         render: function(ctx, left, top, styleOverride, fabricObject) {
-         const angle = fabric.util.degreesToRadians(fabricObject.angle); 
-          ctx.save(); 
-          ctx.translate(left, top); 
-          ctx.rotate(angle);
-          ctx.fillStyle = 'black';
-          ctx.strokeStyle = 'black';
-          ctx.lineWidth = 1;
-          ctx.strokeRect(-size/2, -size/2, size, size);
-          ctx.font = 'bold 16px sans-serif';
-          ctx.textAlign = 'center';
-          ctx.textBaseline = 'middle';
-          ctx.fillText('×', 0, 0); // draw at rotated origin 
-          ctx.restore();
-        }
+        const size = 20; // define the button size here
+        const angle = fabric.util.degreesToRadians(fabricObject.angle);
+        ctx.save();
+        ctx.translate(left, top);
+        ctx.rotate(angle);
+        ctx.fillStyle = 'white';
+        ctx.strokeStyle = 'black';
+        ctx.lineWidth = 1;
+        ctx.fillRect(-size/2, -size/2, size, size);
+        ctx.strokeRect(-size/2, -size/2, size, size);
+        ctx.fillStyle = 'black';
+        ctx.font = 'bold 16px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('×', 0, 0);
+        ctx.restore();
+}
       });
 
       canvas.add(img);
@@ -148,19 +151,22 @@ function addSticker(src) {
         canvas.renderAll();
         saveState();
       },
-      render: function(ctx, left, top, styleOverride, fabricObject) {
-        const angle = fabric.util.degreesToRadians(fabricObject.angle); 
-        ctx.save(); 
-        ctx.translate(left, top); 
+        render: function(ctx, left, top, styleOverride, fabricObject) {
+        const size = 20; // define the button size here
+        const angle = fabric.util.degreesToRadians(fabricObject.angle);
+        ctx.save();
+        ctx.translate(left, top);
         ctx.rotate(angle);
-        ctx.fillStyle = 'black';
+        ctx.fillStyle = 'white';
         ctx.strokeStyle = 'black';
         ctx.lineWidth = 1;
+        ctx.fillRect(-size/2, -size/2, size, size);
         ctx.strokeRect(-size/2, -size/2, size, size);
+        ctx.fillStyle = 'black';
         ctx.font = 'bold 16px sans-serif';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
-        ctx.fillText('×', 0, 0); // draw at rotated origin 
+        ctx.fillText('×', 0, 0);
         ctx.restore();
       }
     });
@@ -328,20 +334,23 @@ window.showHelp = function() {
       canvas.renderAll();
       saveState();
     },
-    render: function(ctx, left, top, styleOverride, fabricObject) {
-      const angle = fabric.util.degreesToRadians(fabricObject.angle); 
-      ctx.save(); 
-      ctx.translate(left, top); 
-      ctx.rotate(angle);
-      ctx.fillStyle = 'black';
-      ctx.strokeStyle = 'black';
-      ctx.lineWidth = 1;
-      ctx.strokeRect(-size/2, -size/2, size, size);
-      ctx.font = 'bold 16px sans-serif';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.fillText('×', 0, 0); // draw at rotated origin 
-      ctx.restore();
+        render: function(ctx, left, top, styleOverride, fabricObject) {
+        const size = 20; // define the button size here
+        const angle = fabric.util.degreesToRadians(fabricObject.angle);
+        ctx.save();
+        ctx.translate(left, top);
+        ctx.rotate(angle);
+        ctx.fillStyle = 'white';
+        ctx.strokeStyle = 'black';
+        ctx.lineWidth = 1;
+        ctx.fillRect(-size/2, -size/2, size, size);
+        ctx.strokeRect(-size/2, -size/2, size, size);
+        ctx.fillStyle = 'black';
+        ctx.font = 'bold 16px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('×', 0, 0);
+        ctx.restore();
     }
   });
 
