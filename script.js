@@ -326,7 +326,7 @@ window.showHelp = function() {
       ctx.font = 'bold 12px sans-serif';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
-      ctx.fillText('\u2717', left, top);
+      ctx.fillText('×', left, top);
     }
   });
 
