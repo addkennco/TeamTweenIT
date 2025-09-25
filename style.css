@@ -10,7 +10,7 @@ body {
   max-width: 500px;
   height: 250px;
   display: flex;
-  flex-direction: column; /* stack search + results */
+  flex-direction: column;
   gap: 4px;
   padding: 4px;
   border: 2px solid #4cd3aa;
@@ -21,8 +21,8 @@ body {
 /* Search Input */
 #sticker-search {
   width: 200px;
-  height: 36px; /* consistent height */
-  padding: 6px 8px 6px 36px; /* left padding for icon */
+  height: 36px;
+  padding: 6px 8px 6px 36px;
   font-size: 14px;
   border: 2px solid #4cd3aa;
   border-radius: 6px;
@@ -33,11 +33,13 @@ body {
 
 /* Search Results Container */
 #search-results {
-  display: flex;
+ display: flex;
   gap: 4px;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  height: 72px; 
+  flex-wrap: wrap;
+  overflow-x: hidden;
+  overflow-y: auto;
+  max-height: 160px;
+  padding: 4px; 
 }
 
 /* Recently Used Stickers Container */
@@ -57,7 +59,7 @@ body {
 /* Button Display */
 #icon-buttons {
   display: flex;
-  gap: 20px;       /* space between icons */
+  gap: 20px;
   justify-content: center;
   margin: 20px 0;
 }
@@ -67,11 +69,11 @@ body {
   height: 40px;
   cursor: pointer;
   vertical-align: middle;
-  transition: transform 0.2s; /* smooth hover effect */
+  transition: transform 0.2s;
 }
 
 .icon-button:hover {
-  transform: scale(1.2); /* slightly enlarge on hover */
+  transform: scale(1.2);
 }
 
 /* Font Editor */
@@ -93,7 +95,7 @@ input[type="color"] {
 
 /* Font Size Slider */
 #font-size {
-  -webkit-appearance: none; /* remove default style */
+  -webkit-appearance: none;
   width: 100px;
   height: 6px;
   background: #4cd3aa;
