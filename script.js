@@ -33,9 +33,21 @@ fabric.Object.prototype.set({
   })(fabric.Object.prototype.toObject);
 
   // --- Upload image ---
-document.getElementById('uploader').addEventListener('change', function(e) {
+const uploader = document.getElementById('uploader');
+const uploadButton = document.getElementById('upload-button');
+const filenameLabel = document.getElementById('uploaded-filename');
+
+// Open file picker when clicking the icon
+uploadButton.addEventListener('click', () => {
+  uploader.click();
+});
+
+uploader.addEventListener('change', function(e) {
   const file = e.target.files[0];
   if (!file) return;
+
+  // Show filename nicely
+  filenameLabel.textContent = file.name;
 
   const reader = new FileReader();
   reader.onload = function(f) {
@@ -52,6 +64,38 @@ document.getElementById('uploader').addEventListener('change', function(e) {
         isSticker: false
       });
 
+      // Delete control (top-right)
+      img.controls.tr = new fabric.Control({
+        x: 0.5,
+        y: -0.5,
+        offsetX: 16,
+        offsetY: -16,
+        cursorStyle: 'pointer',
+        mouseUpHandler: function(eventData, transform) {
+          canvas.remove(transform.target);
+          canvas.renderAll();
+          saveState();
+        },
+        render: function(ctx, left, top, styleOverride, fabricObject) {
+          fabric.Control.prototype.render.call(this, ctx, left, top, styleOverride, fabricObject);
+          ctx.fillStyle = 'black';
+          ctx.font = 'bold 12px sans-serif';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText('×', left, top);
+        }
+      });
+
+      canvas.add(img);
+      canvas.setActiveObject(img);
+      restackStickers();
+    }, { crossOrigin: 'anonymous' });
+
+    e.target.value = ''; // Clear file input
+  };
+
+  reader.readAsDataURL(file);
+});
       // --- Delete control (top-right) ---
       img.controls.tr = new fabric.Control({
         x: 0.5,
@@ -70,7 +114,7 @@ document.getElementById('uploader').addEventListener('change', function(e) {
           ctx.font = 'bold 12px sans-serif';
           ctx.textAlign = 'center';
           ctx.textBaseline = 'middle';
-          ctx.fillText('\u2717', left, top);
+          ctx.fillText('×', left, top);
         }
       });
 
