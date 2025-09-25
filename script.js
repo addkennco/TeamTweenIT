@@ -68,8 +68,8 @@ uploader.addEventListener('change', function(e) {
   const file = e.target.files[0];
   if (!file) return;
 
-  // --- Filename Display ---
-  filenameLabel.textContent = file.name;
+  // --- Filename Workaround ---
+  //filenameLabel.textContent = file.name;
 
   const reader = new FileReader();
   reader.onload = function(f) {
