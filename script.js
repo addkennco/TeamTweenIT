@@ -1,9 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
 
+  const canvasElement = document.getElementById('c');
+    canvasElement.style.border = '1px solid #4cd3aa';
+
   const canvas = new fabric.Canvas('c', {
     preserveObjectStacking: true
   });
-  canvas.setBackgroundColor('lightgrey', canvas.renderAll.bind(canvas));
+  canvas.setBackgroundColor('white', canvas.renderAll.bind(canvas));
 
   // --- Make all object borders and corners black ---
 fabric.Object.prototype.set({
