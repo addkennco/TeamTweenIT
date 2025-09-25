@@ -37,7 +37,7 @@ body {
   gap: 4px;
   flex-wrap: wrap;
   overflow-x: hidden;
-  overflow-y: auto;
+  overflow-y: hidden;
   max-height: 160px;
   padding: 4px; 
 }
